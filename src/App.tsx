@@ -1,17 +1,12 @@
-// src/App.tsx
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import routes from '@/router/index';
 
-const Home = () => <div>Home Page</div>;
-const About = () => <div>About Page</div>;
+const router = createBrowserRouter(routes);
 
-const App = () => (
-  <Router>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-    </Routes>
-  </Router>
-);
+function App() {
+  return (
+    <RouterProvider router={router} />
+  );
+}
 
 export default App;

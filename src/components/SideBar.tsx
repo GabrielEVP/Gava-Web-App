@@ -122,7 +122,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex transition-all duration-300">
       <aside className="fixed left-0 h-full w-20 bg-white dark:bg-gray-800 shadow-lg">
         <div className="p-3">
           <img
@@ -137,7 +137,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             {navigationItems.map((item) => (
               <li key={item.route}>
                 <NavLink to={item.route}>
-                  <div className="p-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <div className="p-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-700 text-black dark:text-gray-300">
                     {item.icon}
                   </div>
                 </NavLink>

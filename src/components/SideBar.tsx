@@ -136,7 +136,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
           <ul className="space-y-4 flex flex-col items-center">
             {navigationItems.map((item) => (
               <li key={item.route}>
-                <NavLink to={item.route} className={''} >
+                <NavLink to={item.route}>
                   <div className="p-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-700">
                     {item.icon}
                   </div>
@@ -145,22 +145,25 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             ))}
           </ul>
         </nav>
-        <div className="absolute bottom-0 w-full pb-4 flex flex-col items-center">
-          <button
-            onClick={toggleDarkMode}
-            className="p-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            {isDarkMode ? (
-              <SunIcon className="w-6 h-6 text-gray-300" />
-            ) : (
-              <MoonIcon className="w-6 h-6 text-gray-600" />
-            )}
-          </button>
-          <hr className="border-gray-200 dark:border-gray-700 mx-3" />
+        <div className="absolute bottom-0 w-full pb-4">
+          <hr className="border-gray-200 dark:border-gray-700 mx-3 mb-4" />
+            <div className="flex justify-center mb-4">
+              <button
+                onClick={toggleDarkMode}
+                className="p-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                {isDarkMode ? (
+                  <SunIcon className="w-6 h-6 text-gray-300" />
+                ) : (
+                  <MoonIcon className="w-6 h-6 text-gray-600" />
+                )}
+              </button>
+          </div>
+          <hr className="border-gray-200 dark:border-gray-700 mx-3 mb-4" />
           <div className="relative px-3">
-                      <button
+            <button
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-              className="w-14 h-14 rounded-full ring-2 ring-primary-500 transition-all duration-300 ease-in-out hover:ring-primary-700"
+              className="w-14 h-14 rounded-full ring-2 ring-primary-500 p-0.5 transition-transform hover:scale-105"
             >
               <img
                 className="w-full h-full rounded-full object-cover"
@@ -168,17 +171,16 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 alt="User avatar"
               />
             </button>
-            {/* Menú de perfil */}
             {isProfileMenuOpen && (
               <div
                 ref={profileMenuRef}
-                className="absolute left-full ml-2 w-40 bg-white dark:bg-gray-800 shadow-lg py-1 rounded-lg border dark:border-gray-700"
+                className="absolute left-full bottom-0 mb-0 ml-2 w-40 rounded-lg bg-white dark:bg-gray-800 shadow-lg py-1 transform transition-all duration-200 z-50"
               >
                 {profileMenuItems.map((item) => (
                   <button
                     key={item.label}
                     onClick={item.action}
-                    className="w-full px-4 py-2 text-left flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
+                    className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 text-gray-700 dark:text-gray-300 transition-colors duration-150"
                   >
                     {item.icon} {item.label}
                   </button>
@@ -188,7 +190,9 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </aside>
-      <main className="ml-20 p-6 w-full">{children}</main>
+      <main className="ml-20 p-6 w-full">
+        {children}
+      </main>
     </div>
   )
 }

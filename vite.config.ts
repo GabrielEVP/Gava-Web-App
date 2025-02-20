@@ -15,25 +15,29 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src/components')
       },
       {
-        find: '@interfaces',
-        replacement: path.resolve(__dirname, 'src/interfaces')
-      },
-      {
         find: '@constants',
         replacement: path.resolve(__dirname, 'src/constants')
-      },
-      {
-        find: '@router',
-        replacement: path.resolve(__dirname, 'src/router')
       },
       {
         find: '@hooks',
         replacement: path.resolve(__dirname, 'src/hooks')
       },
       {
-        find: '@views',
-        replacement: path.resolve(__dirname, 'src/views')
-      }
+        find: '@interfaces',
+        replacement: path.resolve(__dirname, 'src/interfaces')
+      },
+      {
+        find: '@pages',
+        replacement: path.resolve(__dirname, 'src/pages')
+      },
+      {
+        find: '@router',
+        replacement: path.resolve(__dirname, 'src/router')
+      },
+      {
+        find: '@schemas',
+        replacement: path.resolve(__dirname, 'src/schemas')
+      },
     ]
   }
 });

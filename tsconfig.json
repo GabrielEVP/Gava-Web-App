@@ -8,7 +8,7 @@
       "@constants/*": ["src/constants/*"],
       "@router/*": ["src/router/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@views/*": ["src/views/*"]
+      "@views/*": ["src/pages/*"]
     }
   },
   "files": [],

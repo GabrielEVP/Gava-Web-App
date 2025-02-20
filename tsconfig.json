@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "noImplicitAny": true,
     "strictNullChecks": true,  
     "composite": true,
     "noEmit": false,

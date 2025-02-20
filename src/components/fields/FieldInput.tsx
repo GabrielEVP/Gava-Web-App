@@ -8,7 +8,7 @@ interface props {
   error?: FieldError
 }
 
-const FormField = ({ name, control, label, type, error }: props) => {
+const FieldInput = ({ name, control, label, type, error }: props) => {
   return (
     <label
       className="block text-sm font-medium text-black dark:text-white mb-1"
@@ -32,4 +32,4 @@ const FormField = ({ name, control, label, type, error }: props) => {
   )
 }
 
-export default FormField
+export default FieldInput

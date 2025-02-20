@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import UserSchema, { FormUserValues } from '@schemas/UserSchema'
-import FormField from '@components/fields/FormField'
+import FieldInput from '@components/fields/FieldInput'
 
 const FormRegister = () => {
   const {
@@ -18,14 +18,14 @@ const FormRegister = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormField
+      <FieldInput
         name="email"
         control={control}
         label="Email"
         type="email"
         error={errors.email}
       />
-      <FormField
+      <FieldInput
         name="password"
         control={control}
         label="Contraseña"

@@ -38,6 +38,10 @@ export default defineConfig({
         find: '@schemas',
         replacement: path.resolve(__dirname, 'src/schemas')
       },
+      {
+        find: '@services',
+        replacement: path.resolve(__dirname, 'src/services')
+      },
     ]
   }
 });

@@ -4,17 +4,18 @@
     "paths": {
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
-      "@interfaces/*": ["src/interfaces/*"],
       "@constants/*": ["src/constants/*"],
-      "@router/*": ["src/router/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@views/*": ["src/pages/*"]
+      "@interfaces/*": ["src/interfaces/*"],
+      "@pages/*": ["src/pages/*"],
+      "@router/*": ["src/router/*"],
+      "@schemas/*": ["src/schemas/*"],
+      "@services/*": ["src/services/*"]
     }
   },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ],
-
+  ]
 }

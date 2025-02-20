@@ -7,40 +7,36 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@',
-        replacement: path.resolve(__dirname, 'src')
-      },
-      {
         find: '@components',
-        replacement: path.resolve(__dirname, 'src/components')
+        replacement: path.resolve(path.join(__dirname, 'src/components'))
       },
       {
         find: '@constants',
-        replacement: path.resolve(__dirname, 'src/constants')
+        replacement: path.resolve(path.join(__dirname, 'src/constants'))
       },
       {
         find: '@hooks',
-        replacement: path.resolve(__dirname, 'src/hooks')
+        replacement: path.resolve(path.join(__dirname, 'src/hooks'))
       },
       {
         find: '@interfaces',
-        replacement: path.resolve(__dirname, 'src/interfaces')
+        replacement: path.resolve(path.join(__dirname, 'src/interfaces'))
       },
       {
         find: '@pages',
-        replacement: path.resolve(__dirname, 'src/pages')
+        replacement: path.resolve(path.join(__dirname, 'src/pages'))
       },
       {
         find: '@router',
-        replacement: path.resolve(__dirname, 'src/router')
+        replacement: path.resolve(path.join(__dirname, 'src/router'))
       },
       {
         find: '@schemas',
-        replacement: path.resolve(__dirname, 'src/schemas')
+        replacement: path.resolve(path.join(__dirname, 'src/schemas'))
       },
       {
         find: '@services',
-        replacement: path.resolve(__dirname, 'src/services')
+        replacement: path.resolve(path.join(__dirname, 'src/services'))
       },
     ]
   }

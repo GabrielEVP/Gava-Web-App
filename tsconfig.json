@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "noImplicitAny": true,
+    "strictNullChecks": true,  
+    "composite": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "strict": true,
     "paths": {
-      "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
@@ -13,6 +18,8 @@
       "@services/*": ["src/services/*"]
     }
   },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.tsx"],
+  "exclude": ["node_modules"],
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

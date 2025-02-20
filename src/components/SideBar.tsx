@@ -147,17 +147,17 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
         </nav>
         <div className="absolute bottom-0 w-full pb-4">
           <hr className="border-gray-200 dark:border-gray-700 mx-3 mb-4" />
-            <div className="flex justify-center mb-4">
-              <button
-                onClick={toggleDarkMode}
-                className="p-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                {isDarkMode ? (
-                  <SunIcon className="w-6 h-6 text-gray-300" />
-                ) : (
-                  <MoonIcon className="w-6 h-6 text-gray-600" />
-                )}
-              </button>
+          <div className="flex justify-center mb-4">
+            <button
+              onClick={toggleDarkMode}
+              className="p-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              {isDarkMode ? (
+                <SunIcon className="w-6 h-6 text-gray-300" />
+              ) : (
+                <MoonIcon className="w-6 h-6 text-gray-600" />
+              )}
+            </button>
           </div>
           <hr className="border-gray-200 dark:border-gray-700 mx-3 mb-4" />
           <div className="relative px-3">
@@ -180,7 +180,10 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                   <button
                     key={item.label}
                     onClick={item.action}
-                    className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 text-gray-700 dark:text-gray-300 transition-colors duration-150"
+                    className="w-full px-4 py-2.5 text-left text-sm
+                    hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center
+                    gap-2 text-gray-700 dark:text-gray-300 transition-colors
+                    duration-150"
                   >
                     {item.icon} {item.label}
                   </button>
@@ -190,9 +193,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </aside>
-      <main className="ml-20 p-6 w-full">
-        {children}
-      </main>
+      <main className="ml-20 p-6 w-full">{children}</main>
     </div>
   )
 }

@@ -1,26 +1,26 @@
-import { RouteObject } from 'react-router-dom';
-import InvoiceDetailsView from '@views/private/invoices/InvoiceDetailsView';
-import InvoiceEditView from '@views/private/invoices/InvoiceEditView';
-import InvoiceNewView from '@views/private/invoices/InvoiceNewView';
-import InvoicesView from '@views/private/invoices/InvoicesView';
+import { RouteObject } from 'react-router-dom'
+import InvoiceDetailsView from '@pages/private/invoices/InvoiceDetails'
+import InvoiceEditView from '@pages/private/invoices/InvoiceEdit'
+import InvoiceNewView from '@pages/private/invoices/InvoiceNew'
+import InvoicesView from '@pages/private/invoices/Invoices'
 
 const InvoiceRoutes: Array<RouteObject> = [
-    {
-        path: '/invoices',
-        element: <InvoicesView />,
-    },
-    {
-        path: '/invoices/new',
-        element: <InvoiceNewView />,
-    },
-    {
-        path: '/invoices/edit/:id',
-        element: <InvoiceEditView />,
-    },
-    {
-        path: '/invoices/:id',
-        element: <InvoiceDetailsView />,
-    },
-];
+  {
+    path: '/invoices',
+    element: <InvoicesView />,
+  },
+  {
+    path: '/invoices/new',
+    element: <InvoiceNewView />,
+  },
+  {
+    path: '/invoices/edit/:id',
+    element: <InvoiceEditView />,
+  },
+  {
+    path: '/invoices/:id',
+    element: <InvoiceDetailsView />,
+  },
+]
 
-export default InvoiceRoutes;
+export default InvoiceRoutes

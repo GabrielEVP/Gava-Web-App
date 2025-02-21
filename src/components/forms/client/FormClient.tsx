@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
+
 import ClientSchema, { FormClientValues } from '@schemas/ClientSchema'
-import FieldInput from '@components/fields/FieldInput'
-import FieldTextArea from '@components/fields/FieldTextArea'
+import { FieldInput, FieldTextArea } from '@components/fields/index'
 
 const FormRegister = () => {
   const {

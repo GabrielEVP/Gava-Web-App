@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import UserSchema, { FormUserValues } from '@schemas/UserSchema'
-import FieldInput from '@components/fields/FieldInput'
+import FieldInput from '@components/fields/Input'
 
 const FormLogin = () => {
   const {

@@ -1,5 +1,5 @@
 import { Control, FieldError } from 'react-hook-form'
-import FieldInput from '@components/fields/FieldInput'
+import FieldInput from '@components/fields/Input'
 
 interface BillingProps {
   control: Control

@@ -11,7 +11,7 @@ import {
   Legend,
   ChartOptions,
 } from 'chart.js'
-import Sidebar from '@components/SideBar' // Assuming this is a Vue component, you'll need a React equivalent
+import Sidebar from '@components/menus/SideBar' // Assuming this is a Vue component, you'll need a React equivalent
 
 ChartJS.register(
   CategoryScale,

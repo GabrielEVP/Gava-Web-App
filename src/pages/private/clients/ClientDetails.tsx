@@ -1,14 +1,11 @@
-import Sidebar from '@components/SideBar'; 
+import Sidebar from '@components/menus/SideBar'
 
 const ClientsViews: React.FC = () => {
-
   return (
     <Sidebar>
-     <>
-     a
-     </>
+      <>a</>
     </Sidebar>
-  );
-};
+  )
+}
 
-export default ClientsViews;
+export default ClientsViews

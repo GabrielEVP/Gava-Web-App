@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useForm, useFieldArray, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, SubmitHandler } from 'react-hook-form'
 import ClientSchema, { FormClientValues } from '@schemas/ClientSchema'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
@@ -24,89 +23,92 @@ import {
 
 import { Checkbox } from '@components/ui/checkbox'
 
-type Phone = { name: string; phone: string }
-type Email = { email: string }
-type BankAccount = { number: string; name: string }
-
 const FullFormClient = () => {
-  const [phones, setPhones] = useState<Phone[]>([{ name: '', phone: '' }])
-  const [emails, setEmails] = useState<Email[]>([{ email: '' }])
-  const [addresses, setAddresses] = useState([
-    { address: '', state: '', city: '', municipality: '', isBilling: false },
-  ])
-  const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([
-    { number: '', name: '' },
-  ])
-
-  const addPhone = () => {
-    setPhones([...phones, { name: '', phone: '' }])
-  }
-
-  const removePhone = (index: number) => {
-    setPhones(phones.filter((_, i) => i !== index))
-  }
-
-  const addEmail = () => {
-    setEmails([...emails, { email: '' }])
-  }
-  const removeEmail = (index: number) => {
-    setEmails(emails.filter((_, i) => i !== index))
-  }
-
-  const addBankAccount = () => {
-    setBankAccounts([...bankAccounts, { number: '', name: '' }])
-  }
-  const removeBankAccount = (index: number) => {
-    setBankAccounts(bankAccounts.filter((_, i) => i !== index))
-  }
-
-  const addAddress = () => {
-    setAddresses([
-      ...addresses,
-      {
-        address: '',
-        state: '',
-        city: '',
-        municipality: '',
-        isBilling: false,
-      },
-    ])
-  }
-
-  const removeAddress = (index: number) => {
-    setAddresses(addresses.filter((_, i) => i !== index))
-  }
-
-  const updateAddress = (
-    index: number,
-    field: string,
-    value: string | boolean
-  ) => {
-    const newAddresses = [...addresses]
-    newAddresses[index] = { ...newAddresses[index], [field]: value }
-    if (field === 'isBilling' && value === true) {
-      newAddresses.forEach((addr, i) => {
-        if (i !== index) addr.isBilling = false
-      })
-    }
-    setAddresses(newAddresses)
-  }
-
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormClientValues>({
     resolver: zodResolver(ClientSchema),
+    defaultValues: {
+      legal_name: '',
+      code_number: '',
+      registration_number: '',
+      type_client: '',
+      country: '',
+      phones: [{ name: '', phone: '' }],
+      emails: [{ email: '' }],
+      bank_accounts: [{ bank_name: '', account_number: '' }],
+      addresses: [
+        {
+          address: '',
+          state: '',
+          city: '',
+          municipality: '',
+          isBilling: false,
+        },
+      ],
+      credit_days: 0,
+      limit_credit: 0,
+      tax_rate: 0,
+      discount: 0,
+      notes: '',
+    },
+  })
+
+  const {
+    fields: phoneFields,
+    append: appendPhone,
+    remove: removePhone,
+  } = useFieldArray({
+    control,
+    name: 'phones',
+  })
+
+  const {
+    fields: emailFields,
+    append: appendEmail,
+    remove: removeEmail,
+  } = useFieldArray({
+    control,
+    name: 'emails',
+  })
+
+  const {
+    fields: bankAccountFields,
+    append: appendBankAccount,
+    remove: removeBankAccount,
+  } = useFieldArray({
+    control,
+    name: 'bank_accounts',
+  })
+
+  const {
+    fields: addressFields,
+    append: appendAddress,
+    remove: removeAddress,
+    update: updateAddress,
+  } = useFieldArray({
+    control,
+    name: 'addresses',
   })
 
   const onSubmit: SubmitHandler<FormClientValues> = (data) => {
     console.log(data)
   }
 
+  const handleBillingChange = (index: number, checked: boolean) => {
+    addressFields.forEach((item, idx) => {
+      updateAddress(idx, {
+        ...item,
+        isBilling: idx === index ? checked : false,
+      })
+    })
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Tabs defaultValue="account" className="space-y-4">
+      <Tabs defaultValue="general" className="space-y-4">
         <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger className="flex items-center gap-2" value="general">
             <User className="h-4 w-4" />
@@ -133,6 +135,8 @@ const FullFormClient = () => {
             <span className="hidden lg:inline">Notas</span>
           </TabsTrigger>
         </TabsList>
+
+        {/* Sección Básica/General */}
         <TabsContent className="space-y-4" value="general">
           <div className="w-full">
             <FieldInput
@@ -147,14 +151,14 @@ const FullFormClient = () => {
             <FieldInput
               name="code_number"
               control={control}
-              label="Codigo"
+              label="Código"
               type="text"
               error={errors.code_number}
             />
             <FieldInput
               name="registration_number"
               control={control}
-              label="Numero de Registro"
+              label="Número de Registro"
               type="text"
               error={errors.registration_number}
             />
@@ -176,24 +180,26 @@ const FullFormClient = () => {
             />
           </div>
         </TabsContent>
+
+        {/* Sección de Contacto */}
         <TabsContent className="space-y-4" value="contact">
           <div className="space-y-2">
             <Label>Teléfonos</Label>
-            {phones.map((phone, index) => (
-              <div key={index} className="flex items-center gap-2 mb-2">
+            {phoneFields.map((item, index) => (
+              <div key={item.id} className="flex items-center gap-2 mb-2">
                 <FieldInput
-                  name="name"
+                  name={`phones.${index}.name`}
                   control={control}
                   label="Nombre"
                   type="text"
-                  error={errors.legal_name}
+                  error={errors.phones?.[index]?.name}
                 />
                 <FieldInput
-                  name="phones"
+                  name={`phones.${index}.phone`}
                   control={control}
-                  label="Teléfonos"
-                  type="number"
-                  error={errors.legal_name}
+                  label="Teléfono"
+                  type="text"
+                  error={errors.phones?.[index]?.phone}
                 />
                 <Button
                   variant="outline"
@@ -204,20 +210,24 @@ const FullFormClient = () => {
                 </Button>
               </div>
             ))}
-            <Button variant="outline" onClick={addPhone} className="mt-2">
+            <Button
+              variant="outline"
+              onClick={() => appendPhone({ name: '', phone: '' })}
+              className="mt-2"
+            >
               <Plus className="h-4 w-4 mr-2" /> Añadir Teléfono
             </Button>
           </div>
           <div className="space-y-2">
             <Label>Emails</Label>
-            {emails.map((email, index) => (
-              <div key={index} className="flex items-center gap-2 mb-2">
+            {emailFields.map((item, index) => (
+              <div key={item.id} className="flex items-center gap-2 mb-2">
                 <FieldInput
-                  name="email"
+                  name={`emails.${index}.email`}
                   control={control}
                   label="Email"
                   type="email"
-                  error={errors.legal_name}
+                  error={errors.emails?.[index]?.email}
                 />
                 <Button
                   variant="outline"
@@ -228,29 +238,35 @@ const FullFormClient = () => {
                 </Button>
               </div>
             ))}
-            <Button variant="outline" onClick={addEmail} className="mt-2">
+            <Button
+              variant="outline"
+              onClick={() => appendEmail({ email: '' })}
+              className="mt-2"
+            >
               <Plus className="h-4 w-4 mr-2" /> Añadir Email
             </Button>
           </div>
         </TabsContent>
+
+        {/* Sección de Cuentas Bancarias */}
         <TabsContent className="space-y-4" value="bankAccount">
           <div className="space-y-2">
             <Label>Cuentas Bancarias</Label>
-            {bankAccounts.map((bankAccount, index) => (
-              <div key={index} className="flex items-center gap-2 mb-2">
+            {bankAccountFields.map((item, index) => (
+              <div key={item.id} className="flex items-center gap-2 mb-2">
                 <FieldInput
-                  name="name"
+                  name={`bankAccounts.${index}.name`}
                   control={control}
                   label="Nombre"
                   type="text"
-                  error={errors.legal_name}
+                  error={errors.bank_accounts?.[index]?.bank_name}
                 />
                 <FieldInput
-                  name="phones"
+                  name={`bankAccounts.${index}.number`}
                   control={control}
                   label="Cuenta Bancaria"
-                  type="number"
-                  error={errors.legal_name}
+                  type="text"
+                  error={errors.bank_accounts?.[index]?.account_number}
                 />
                 <Button
                   variant="outline"
@@ -261,14 +277,22 @@ const FullFormClient = () => {
                 </Button>
               </div>
             ))}
-            <Button variant="outline" onClick={addBankAccount} className="mt-2">
+            <Button
+              variant="outline"
+              onClick={() =>
+                appendBankAccount({ bank_name: '', account_number: '' })
+              }
+              className="mt-2"
+            >
               <Plus className="h-4 w-4 mr-2" /> Añadir Cuenta Bancaria
             </Button>
           </div>
         </TabsContent>
-        <TabsContent value="address" className="space-y-4">
-          {addresses.map((address, index) => (
-            <div key={index} className="space-y-4 border p-4 rounded-md">
+
+        {/* Sección de Direcciones */}
+        <TabsContent className="space-y-4" value="address">
+          {addressFields.map((item, index) => (
+            <div key={item.id} className="space-y-4 border p-4 rounded-md">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-semibold">Dirección {index + 1}</h3>
                 <Button
@@ -281,48 +305,48 @@ const FullFormClient = () => {
               </div>
               <div className="space-y-2">
                 <FieldInput
-                  name="name"
+                  name={`addresses.${index}.address`}
                   control={control}
                   label="Dirección"
                   type="text"
-                  error={errors.legal_name}
+                  error={errors.addresses?.[index]?.address}
                 />
               </div>
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
                   <FieldInput
-                    name="name"
+                    name={`addresses.${index}.state`}
                     control={control}
                     label="Estado"
                     type="text"
-                    error={errors.legal_name}
+                    error={errors.addresses?.[index]?.state}
                   />
                 </div>
                 <div className="space-y-2">
                   <FieldInput
-                    name="name"
+                    name={`addresses.${index}.municipality`}
                     control={control}
                     label="Municipio"
                     type="text"
-                    error={errors.legal_name}
+                    error={errors.addresses?.[index]?.municipality}
                   />
                 </div>
                 <div className="space-y-2">
                   <FieldInput
-                    name="name"
+                    name={`addresses.${index}.city`}
                     control={control}
                     label="Ciudad"
                     type="text"
-                    error={errors.legal_name}
+                    error={errors.addresses?.[index]?.city}
                   />
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id={`billing-${index}`}
-                  checked={address.isBilling}
+                  checked={item.isBilling}
                   onCheckedChange={(checked) =>
-                    updateAddress(index, 'isBilling', checked)
+                    handleBillingChange(index, Boolean(checked))
                   }
                 />
                 <Label htmlFor={`billing-${index}`}>
@@ -331,10 +355,24 @@ const FullFormClient = () => {
               </div>
             </div>
           ))}
-          <Button variant="outline" onClick={addAddress} className="mt-2">
+          <Button
+            variant="outline"
+            onClick={() =>
+              appendAddress({
+                address: '',
+                state: '',
+                city: '',
+                municipality: '',
+                isBilling: false,
+              })
+            }
+            className="mt-2"
+          >
             <Plus className="h-4 w-4 mr-2" /> Añadir Dirección
           </Button>
         </TabsContent>
+
+        {/* Sección de Crédito */}
         <TabsContent className="space-y-4" value="credit">
           <div className="grid gap-4 md:grid-cols-2">
             <FieldInput
@@ -369,6 +407,8 @@ const FullFormClient = () => {
             />
           </div>
         </TabsContent>
+
+        {/* Sección de Notas */}
         <TabsContent className="space-y-4" value="notes">
           <FieldTextArea name="notes" label="Notas" />
         </TabsContent>

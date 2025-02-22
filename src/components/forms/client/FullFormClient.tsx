@@ -135,7 +135,6 @@ const FullFormClient = () => {
             <span className="hidden lg:inline">Notas</span>
           </TabsTrigger>
         </TabsList>
-
         {/* Sección Básica/General */}
         <TabsContent className="space-y-4" value="general">
           <div className="w-full">
@@ -181,116 +180,23 @@ const FullFormClient = () => {
           </div>
         </TabsContent>
 
-        {/* Sección de Contacto */}
-        <TabsContent className="space-y-4" value="contact">
-          <div className="space-y-2">
-            <Label>Teléfonos</Label>
-            {phoneFields.map((item, index) => (
-              <div key={item.id} className="flex items-center gap-2 mb-2">
-                <FieldInput
-                  name={`phones.${index}.name`}
-                  control={control}
-                  label="Nombre"
-                  type="text"
-                  error={errors.phones?.[index]?.name}
-                />
-                <FieldInput
-                  name={`phones.${index}.phone`}
-                  control={control}
-                  label="Teléfono"
-                  type="text"
-                  error={errors.phones?.[index]?.phone}
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => removePhone(index)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            <Button
-              variant="outline"
-              onClick={() => appendPhone({ name: '', phone: '' })}
-              className="mt-2"
-            >
-              <Plus className="h-4 w-4 mr-2" /> Añadir Teléfono
-            </Button>
-          </div>
-          <div className="space-y-2">
-            <Label>Emails</Label>
-            {emailFields.map((item, index) => (
-              <div key={item.id} className="flex items-center gap-2 mb-2">
-                <FieldInput
-                  name={`emails.${index}.email`}
-                  control={control}
-                  label="Email"
-                  type="email"
-                  error={errors.emails?.[index]?.email}
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => removeEmail(index)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            <Button
-              variant="outline"
-              onClick={() => appendEmail({ email: '' })}
-              className="mt-2"
-            >
-              <Plus className="h-4 w-4 mr-2" /> Añadir Email
-            </Button>
-          </div>
-        </TabsContent>
-
-        {/* Sección de Cuentas Bancarias */}
-        <TabsContent className="space-y-4" value="bankAccount">
-          <div className="space-y-2">
-            <Label>Cuentas Bancarias</Label>
-            {bankAccountFields.map((item, index) => (
-              <div key={item.id} className="flex items-center gap-2 mb-2">
-                <FieldInput
-                  name={`bankAccounts.${index}.name`}
-                  control={control}
-                  label="Nombre"
-                  type="text"
-                  error={errors.bank_accounts?.[index]?.bank_name}
-                />
-                <FieldInput
-                  name={`bankAccounts.${index}.number`}
-                  control={control}
-                  label="Cuenta Bancaria"
-                  type="text"
-                  error={errors.bank_accounts?.[index]?.account_number}
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => removeBankAccount(index)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            <Button
-              variant="outline"
-              onClick={() =>
-                appendBankAccount({ bank_name: '', account_number: '' })
-              }
-              className="mt-2"
-            >
-              <Plus className="h-4 w-4 mr-2" /> Añadir Cuenta Bancaria
-            </Button>
-          </div>
-        </TabsContent>
-
         {/* Sección de Direcciones */}
         <TabsContent className="space-y-4" value="address">
+          <Button
+            variant="outline"
+            onClick={() =>
+              appendAddress({
+                address: '',
+                state: '',
+                city: '',
+                municipality: '',
+                isBilling: false,
+              })
+            }
+            className="mt-2"
+          >
+            <Plus className="h-4 w-4 mr-2" /> Añadir Dirección
+          </Button>
           {addressFields.map((item, index) => (
             <div key={item.id} className="space-y-4 border p-4 rounded-md">
               <div className="flex justify-between items-center">
@@ -355,21 +261,126 @@ const FullFormClient = () => {
               </div>
             </div>
           ))}
+        </TabsContent>
+
+        {/* Sección de Contacto */}
+        <TabsContent className="space-y-4" value="contact">
+          <Button
+            variant="outline"
+            onClick={() => appendPhone({ name: '', phone: '' })}
+            className="mt-2"
+          >
+            <Plus className="h-4 w-4 mr-2" /> Añadir Teléfono
+          </Button>
+          {phoneFields.map((item, index) => (
+            <div key={item.id} className="space-y-4 border p-4 rounded-md">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold">Teléfono {index + 1}</h3>
+                {phoneFields.length > 1 && (
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removePhone(index)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <FieldInput
+                  name={`phones.${index}.name`}
+                  control={control}
+                  label="Nombre"
+                  type="text"
+                  error={errors.phones?.[index]?.name}
+                />
+                <FieldInput
+                  name={`phones.${index}.phone`}
+                  control={control}
+                  label="Teléfono"
+                  type="text"
+                  error={errors.phones?.[index]?.phone}
+                />
+              </div>
+            </div>
+          ))}
+          <Button
+            variant="outline"
+            onClick={() => appendEmail({ email: '' })}
+            className="mt-2"
+          >
+            <Plus className="h-4 w-4 mr-2" /> Añadir Emails
+          </Button>
+          {emailFields.map((item, index) => (
+            <div key={item.id} className="space-y-4 border p-4 rounded-md">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold">Emails {index + 1}</h3>
+                {emailFields.length > 1 && (
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removeEmail(index)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <FieldInput
+                  name={`phones.${index}.name`}
+                  control={control}
+                  label="Nombre"
+                  type="text"
+                  error={errors.emails?.[index]?.email}
+                />
+              </div>
+            </div>
+          ))}
+        </TabsContent>
+
+        {/* Sección de Cuentas Bancarias */}
+        <TabsContent className="space-y-4" value="bankAccount">
           <Button
             variant="outline"
             onClick={() =>
-              appendAddress({
-                address: '',
-                state: '',
-                city: '',
-                municipality: '',
-                isBilling: false,
-              })
+              appendBankAccount({ bank_name: '', account_number: '' })
             }
             className="mt-2"
           >
-            <Plus className="h-4 w-4 mr-2" /> Añadir Dirección
+            <Plus className="h-4 w-4 mr-2" /> Añadir Cuenta Bancaría
           </Button>
+          {bankAccountFields.map((item, index) => (
+            <div key={item.id} className="space-y-4 border p-4 rounded-md">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold">Cuenta {index + 1}</h3>
+                {bankAccountFields.length > 1 && (
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removeBankAccount(index)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <FieldInput
+                  name={`bank_accounts.${index}.bank_name`}
+                  control={control}
+                  label="Nombre del Banco"
+                  type="text"
+                  error={errors.bank_accounts?.[index]?.bank_name}
+                />
+                <FieldInput
+                  name={`bank_accounts.${index}.account_number`}
+                  control={control}
+                  label="Numero de cuenta"
+                  type="text"
+                  error={errors.bank_accounts?.[index]?.account_number}
+                />
+              </div>
+            </div>
+          ))}
         </TabsContent>
 
         {/* Sección de Crédito */}

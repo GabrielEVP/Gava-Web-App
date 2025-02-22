@@ -12,7 +12,7 @@ const FieldTextArea = ({ label, name, placeholder, id }: props) => {
   return (
     <div className="grid w-full gap-1.5">
       <Label htmlFor="message">{label}</Label>
-      <Textarea name={name} placeholder={placeholder} id={id} />
+      <Textarea name={name} placeholder={placeholder} id={id} rows={6} />
     </div>
   )
 }

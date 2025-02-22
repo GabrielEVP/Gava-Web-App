@@ -1,10 +1,18 @@
-import { useForm, useFieldArray, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import ClientSchema, { FormClientValues } from '@schemas/ClientSchema'
+import ClientSchema, {
+  FormClientValues,
+  DEFAULTCLIENTFORMVALUES,
+} from '@schemas/ClientSchema'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
-import { Button } from '@components/ui/button'
-import { Label } from '@components/ui/index'
+import {
+  AdressesList,
+  PhonesList,
+  EmailsList,
+  BankAccountsList,
+} from '@components/forms/multiple/index'
+
 import {
   FieldInput,
   FieldTextArea,
@@ -17,11 +25,7 @@ import {
   FileText,
   MapPin,
   User,
-  Trash2,
-  Plus,
 } from 'lucide-react'
-
-import { Checkbox } from '@components/ui/checkbox'
 
 const FullFormClient = () => {
   const {
@@ -30,80 +34,12 @@ const FullFormClient = () => {
     formState: { errors },
   } = useForm<FormClientValues>({
     resolver: zodResolver(ClientSchema),
-    defaultValues: {
-      legal_name: '',
-      code_number: '',
-      registration_number: '',
-      type_client: '',
-      country: '',
-      phones: [{ name: '', phone: '' }],
-      emails: [{ email: '' }],
-      bank_accounts: [{ bank_name: '', account_number: '' }],
-      addresses: [
-        {
-          address: '',
-          state: '',
-          city: '',
-          municipality: '',
-          isBilling: false,
-        },
-      ],
-      credit_days: 0,
-      limit_credit: 0,
-      tax_rate: 0,
-      discount: 0,
-      notes: '',
-    },
-  })
-
-  const {
-    fields: phoneFields,
-    append: appendPhone,
-    remove: removePhone,
-  } = useFieldArray({
-    control,
-    name: 'phones',
-  })
-
-  const {
-    fields: emailFields,
-    append: appendEmail,
-    remove: removeEmail,
-  } = useFieldArray({
-    control,
-    name: 'emails',
-  })
-
-  const {
-    fields: bankAccountFields,
-    append: appendBankAccount,
-    remove: removeBankAccount,
-  } = useFieldArray({
-    control,
-    name: 'bank_accounts',
-  })
-
-  const {
-    fields: addressFields,
-    append: appendAddress,
-    remove: removeAddress,
-    update: updateAddress,
-  } = useFieldArray({
-    control,
-    name: 'addresses',
+    defaultValues: DEFAULTCLIENTFORMVALUES as FormClientValues,
+    mode: 'onBlur',
   })
 
   const onSubmit: SubmitHandler<FormClientValues> = (data) => {
     console.log(data)
-  }
-
-  const handleBillingChange = (index: number, checked: boolean) => {
-    addressFields.forEach((item, idx) => {
-      updateAddress(idx, {
-        ...item,
-        isBilling: idx === index ? checked : false,
-      })
-    })
   }
 
   return (
@@ -135,7 +71,6 @@ const FullFormClient = () => {
             <span className="hidden lg:inline">Notas</span>
           </TabsTrigger>
         </TabsList>
-        {/* Sección Básica/General */}
         <TabsContent className="space-y-4" value="general">
           <div className="w-full">
             <FieldInput
@@ -179,211 +114,16 @@ const FullFormClient = () => {
             />
           </div>
         </TabsContent>
-
-        {/* Sección de Direcciones */}
         <TabsContent className="space-y-4" value="address">
-          <Button
-            variant="outline"
-            onClick={() =>
-              appendAddress({
-                address: '',
-                state: '',
-                city: '',
-                municipality: '',
-                isBilling: false,
-              })
-            }
-            className="mt-2"
-          >
-            <Plus className="h-4 w-4 mr-2" /> Añadir Dirección
-          </Button>
-          {addressFields.map((item, index) => (
-            <div key={item.id} className="space-y-4 border p-4 rounded-md">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Dirección {index + 1}</h3>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => removeAddress(index)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="space-y-2">
-                <FieldInput
-                  name={`addresses.${index}.address`}
-                  control={control}
-                  label="Dirección"
-                  type="text"
-                  error={errors.addresses?.[index]?.address}
-                />
-              </div>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="space-y-2">
-                  <FieldInput
-                    name={`addresses.${index}.state`}
-                    control={control}
-                    label="Estado"
-                    type="text"
-                    error={errors.addresses?.[index]?.state}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <FieldInput
-                    name={`addresses.${index}.municipality`}
-                    control={control}
-                    label="Municipio"
-                    type="text"
-                    error={errors.addresses?.[index]?.municipality}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <FieldInput
-                    name={`addresses.${index}.city`}
-                    control={control}
-                    label="Ciudad"
-                    type="text"
-                    error={errors.addresses?.[index]?.city}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={`billing-${index}`}
-                  checked={item.isBilling}
-                  onCheckedChange={(checked) =>
-                    handleBillingChange(index, Boolean(checked))
-                  }
-                />
-                <Label htmlFor={`billing-${index}`}>
-                  Usar como dirección de facturación
-                </Label>
-              </div>
-            </div>
-          ))}
+          <AdressesList control={control} errors={errors} isBilling />
         </TabsContent>
-
-        {/* Sección de Contacto */}
         <TabsContent className="space-y-4" value="contact">
-          <Button
-            variant="outline"
-            onClick={() => appendPhone({ name: '', phone: '' })}
-            className="mt-2"
-          >
-            <Plus className="h-4 w-4 mr-2" /> Añadir Teléfono
-          </Button>
-          {phoneFields.map((item, index) => (
-            <div key={item.id} className="space-y-4 border p-4 rounded-md">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Teléfono {index + 1}</h3>
-                {phoneFields.length > 1 && (
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => removePhone(index)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FieldInput
-                  name={`phones.${index}.name`}
-                  control={control}
-                  label="Nombre"
-                  type="text"
-                  error={errors.phones?.[index]?.name}
-                />
-                <FieldInput
-                  name={`phones.${index}.phone`}
-                  control={control}
-                  label="Teléfono"
-                  type="text"
-                  error={errors.phones?.[index]?.phone}
-                />
-              </div>
-            </div>
-          ))}
-          <Button
-            variant="outline"
-            onClick={() => appendEmail({ email: '' })}
-            className="mt-2"
-          >
-            <Plus className="h-4 w-4 mr-2" /> Añadir Emails
-          </Button>
-          {emailFields.map((item, index) => (
-            <div key={item.id} className="space-y-4 border p-4 rounded-md">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Emails {index + 1}</h3>
-                {emailFields.length > 1 && (
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => removeEmail(index)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FieldInput
-                  name={`phones.${index}.name`}
-                  control={control}
-                  label="Nombre"
-                  type="text"
-                  error={errors.emails?.[index]?.email}
-                />
-              </div>
-            </div>
-          ))}
+          <PhonesList control={control} errors={errors} />
+          <EmailsList control={control} errors={errors} />
         </TabsContent>
-
-        {/* Sección de Cuentas Bancarias */}
         <TabsContent className="space-y-4" value="bankAccount">
-          <Button
-            variant="outline"
-            onClick={() =>
-              appendBankAccount({ bank_name: '', account_number: '' })
-            }
-            className="mt-2"
-          >
-            <Plus className="h-4 w-4 mr-2" /> Añadir Cuenta Bancaría
-          </Button>
-          {bankAccountFields.map((item, index) => (
-            <div key={item.id} className="space-y-4 border p-4 rounded-md">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Cuenta {index + 1}</h3>
-                {bankAccountFields.length > 1 && (
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => removeBankAccount(index)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FieldInput
-                  name={`bank_accounts.${index}.bank_name`}
-                  control={control}
-                  label="Nombre del Banco"
-                  type="text"
-                  error={errors.bank_accounts?.[index]?.bank_name}
-                />
-                <FieldInput
-                  name={`bank_accounts.${index}.account_number`}
-                  control={control}
-                  label="Numero de cuenta"
-                  type="text"
-                  error={errors.bank_accounts?.[index]?.account_number}
-                />
-              </div>
-            </div>
-          ))}
+          <BankAccountsList control={control} errors={errors} />
         </TabsContent>
-
-        {/* Sección de Crédito */}
         <TabsContent className="space-y-4" value="credit">
           <div className="grid gap-4 md:grid-cols-2">
             <FieldInput
@@ -418,8 +158,6 @@ const FullFormClient = () => {
             />
           </div>
         </TabsContent>
-
-        {/* Sección de Notas */}
         <TabsContent className="space-y-4" value="notes">
           <FieldTextArea name="notes" label="Notas" />
         </TabsContent>

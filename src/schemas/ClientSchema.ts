@@ -73,5 +73,30 @@ const ClientSchema = z.object({
 
 type FormClientValues = z.infer<typeof ClientSchema>
 
+const DEFAULTCLIENTFORMVALUES = {
+    legal_name: '',
+    code_number: '',
+    registration_number: '',
+    type_client: '',
+    country: '',
+    phones: [{ name: '', phone: '' }],
+    emails: [{ email: '' }],
+    bank_accounts: [{ bank_name: '', account_number: '' }],
+    addresses: [
+        {
+            address: '',
+            state: '',
+            city: '',
+            municipality: '',
+            isBilling: false,
+        },
+    ],
+    credit_days: 0,
+    limit_credit: 0,
+    tax_rate: 0,
+    discount: 0,
+    notes: '',
+}
+
 export default ClientSchema
-export type { FormClientValues }
+export { DEFAULTCLIENTFORMVALUES, FormClientValues }

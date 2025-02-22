@@ -1,11 +1,12 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
-
-import ClientSchema, { FormClientValues } from '@schemas/ClientSchema'
-import { FieldInput } from '@components/fields/index'
+import { MapPin, User } from 'lucide-react'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
+import { FieldInput, FieldSelect } from '@components/fields/index'
+import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
+import ClientSchema, { FormClientValues } from '@schemas/ClientSchema'
 
-const FullFormClient = () => {
+const CompactFormClient = () => {
   const {
     control,
     handleSubmit,
@@ -20,20 +21,28 @@ const FullFormClient = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Tabs defaultValue="account" className="w-[400px]">
-        <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="address">Direccion</TabsTrigger>
+      <Tabs defaultValue="account" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger className="flex items-center gap-2" value="general">
+            <User className="h-4 w-4" />
+            <span className="hidden lg:inline">Básico</span>
+          </TabsTrigger>
+          <TabsTrigger className="flex items-center gap-2" value="address">
+            <MapPin className="h-4 w-4" />
+            <span className="hidden lg:inline">Dirección</span>
+          </TabsTrigger>
         </TabsList>
-        <TabsContent value="general">
-          <FieldInput
-            name="legal_name"
-            control={control}
-            label="Nombre Legal"
-            type="text"
-            error={errors.legal_name}
-          />
-          <div className="grid gap-4 grid-cols-2">
+        <TabsContent className="space-y-4" value="general">
+          <div className="w-full">
+            <FieldInput
+              name="legal_name"
+              control={control}
+              label="Nombre Legal"
+              type="text"
+              error={errors.legal_name}
+            />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
             <FieldInput
               name="code_number"
               control={control}
@@ -49,24 +58,24 @@ const FullFormClient = () => {
               error={errors.registration_number}
             />
           </div>
-          <div className="grid gap-4 grid-cols-2">
-            <FieldInput
+          <div className="grid gap-4 md:grid-cols-2">
+            <FieldSelect
               name="type_client"
-              control={control}
               label="Tipo de Cliente"
-              type="text"
-              error={errors.type_client}
+              placeholder="Seleccione un tipo de cliente"
+              selectLabel="Tipo de cliente"
+              options={TYPE_CONTACT_SELECT}
             />
-            <FieldInput
+            <FieldSelect
               name="country"
-              control={control}
               label="País"
-              type="text"
-              error={errors.country}
+              placeholder="Seleccione un País"
+              selectLabel="País"
+              options={COUNTRIES}
             />
           </div>
         </TabsContent>
-        <TabsContent value="address">
+        <TabsContent className="space-y-4" value="address">
           <FieldInput
             name="address"
             control={control}
@@ -74,7 +83,7 @@ const FullFormClient = () => {
             type="text"
             error={errors.address}
           />
-          <div className="grid gap-4 grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             <FieldInput
               name="state"
               control={control}
@@ -103,4 +112,4 @@ const FullFormClient = () => {
   )
 }
 
-export default FullFormClient
+export default CompactFormClient

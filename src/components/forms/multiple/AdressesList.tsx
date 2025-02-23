@@ -34,7 +34,7 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
   }
 
   return (
-    <>
+    <div>
       <Button
         variant="outline"
         onClick={() =>
@@ -50,67 +50,69 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
       >
         <Plus className="h-4 w-4 mr-2" /> Añadir Dirección
       </Button>
-      {fields.map((item, index) => (
-        <div key={item.id} className="space-y-4 border p-4 rounded-md">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Dirección {index + 1}</h3>
-            <Button variant="outline" size="icon" onClick={() => remove(index)}>
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </div>
-          <div className="space-y-2">
-            <FieldInput
-              name={`addresses.${index}.address`}
-              control={control}
-              label="Dirección"
-              type="text"
-              error={errors.addresses?.[index]?.address}
-            />
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="space-y-2">
-              <FieldInput
-                name={`addresses.${index}.state`}
-                control={control}
-                label="Estado"
-                type="text"
-                error={errors.addresses?.[index]?.state}
-              />
+      <div className='max-h-96 overflow-y-auto mt-4'>
+        {fields.map((item, index) => (
+          <div key={item.id} className="space-y-4 border p-4 rounded-md mb-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold">Dirección {index + 1}</h3>
+              <Button variant="outline" size="icon" onClick={() => remove(index)}>
+                <Trash2 className="h-4 w-4" />
+              </Button>
             </div>
             <div className="space-y-2">
               <FieldInput
-                name={`addresses.${index}.municipality`}
+                name={`addresses.${index}.address`}
                 control={control}
-                label="Municipio"
+                label="Dirección"
                 type="text"
-                error={errors.addresses?.[index]?.municipality}
+                error={errors.addresses?.[index]?.address}
               />
             </div>
-            <div className="space-y-2">
-              <FieldInput
-                name={`addresses.${index}.city`}
-                control={control}
-                label="Ciudad"
-                type="text"
-                error={errors.addresses?.[index]?.city}
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="space-y-2">
+                <FieldInput
+                  name={`addresses.${index}.state`}
+                  control={control}
+                  label="Estado"
+                  type="text"
+                  error={errors.addresses?.[index]?.state}
+                />
+              </div>
+              <div className="space-y-2">
+                <FieldInput
+                  name={`addresses.${index}.municipality`}
+                  control={control}
+                  label="Municipio"
+                  type="text"
+                  error={errors.addresses?.[index]?.municipality}
+                />
+              </div>
+              <div className="space-y-2">
+                <FieldInput
+                  name={`addresses.${index}.city`}
+                  control={control}
+                  label="Ciudad"
+                  type="text"
+                  error={errors.addresses?.[index]?.city}
+                />
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id={`billing-${index}`}
+                checked={item.isBilling}
+                onCheckedChange={(checked) =>
+                  handleBillingChange(index, Boolean(checked))
+                }
               />
+              <Label htmlFor={`billing-${index}`}>
+                Usar como dirección de facturación
+              </Label>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id={`billing-${index}`}
-              checked={item.isBilling}
-              onCheckedChange={(checked) =>
-                handleBillingChange(index, Boolean(checked))
-              }
-            />
-            <Label htmlFor={`billing-${index}`}>
-              Usar como dirección de facturación
-            </Label>
-          </div>
-        </div>
-      ))}
-    </>
+        ))}
+      </div>
+    </div>
   )
 }
 

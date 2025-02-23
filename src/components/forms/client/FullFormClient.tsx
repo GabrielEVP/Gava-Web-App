@@ -71,6 +71,7 @@ const FullFormClient = () => {
             <span className="hidden lg:inline">Notas</span>
           </TabsTrigger>
         </TabsList>
+
         <TabsContent className="space-y-4" value="general">
           <div className="w-full">
             <FieldInput

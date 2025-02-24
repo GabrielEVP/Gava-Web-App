@@ -1,9 +1,10 @@
 import { FC } from 'react'
 import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
-import { FieldInput } from '@components/fields/index'
+import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
 import { FormClientValues } from '@schemas/ClientSchema'
+import { TYPE_PHONE } from '@constants/index'
 
 interface PhonesListProps {
   control: Control<FormClientValues>
@@ -18,6 +19,7 @@ const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
   return (
     <>
       <Button
+        type="button"
         variant="outline"
         onClick={() => append({ name: '', phone: '' })}
         className="mt-2"
@@ -30,6 +32,7 @@ const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
             <h3 className="text-lg font-semibold">Teléfono {index + 1}</h3>
             {fields.length > 1 && (
               <Button
+                type="button"
                 variant="outline"
                 size="icon"
                 onClick={() => remove(index)}
@@ -38,7 +41,7 @@ const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
               </Button>
             )}
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3">
             <FieldInput
               name={`phones.${index}.name`}
               control={control}
@@ -52,6 +55,13 @@ const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
               label="Teléfono"
               type="text"
               error={errors.phones?.[index]?.phone}
+            />
+            <FieldSelect
+              name="type"
+              label="Tipo"
+              placeholder="Selecciona un Tipo"
+              selectLabel="Tipo"
+              options={TYPE_PHONE}
             />
           </div>
         </div>

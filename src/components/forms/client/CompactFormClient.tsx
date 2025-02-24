@@ -81,7 +81,7 @@ const CompactFormClient = () => {
             control={control}
             label="Dirección"
             type="text"
-            error={errors.address}
+            error={errors.addresses?.[0]?.address}
           />
           <div className="grid gap-4 md:grid-cols-3">
             <FieldInput
@@ -89,21 +89,21 @@ const CompactFormClient = () => {
               control={control}
               label="Dirección"
               type="text"
-              error={errors.state}
+              error={errors.addresses?.[0]?.state}
             />
             <FieldInput
               name="city"
               control={control}
               label="Ciudad"
               type="text"
-              error={errors.city}
+              error={errors.addresses?.[0]?.city}
             />
             <FieldInput
               name="municipality"
               control={control}
               label="Municipio"
               type="text"
-              error={errors.municipality}
+              error={errors.addresses?.[0]?.municipality}
             />
           </div>
         </TabsContent>

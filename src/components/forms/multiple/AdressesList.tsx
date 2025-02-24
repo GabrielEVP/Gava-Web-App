@@ -36,6 +36,7 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
   return (
     <div>
       <Button
+        type="button"
         variant="outline"
         onClick={() =>
           append({
@@ -55,9 +56,15 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
           <div key={item.id} className="space-y-4 border p-4 rounded-md mb-4">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-semibold">Dirección {index + 1}</h3>
-              <Button variant="outline" size="icon" onClick={() => remove(index)}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
+              {fields.length > 1 && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={() => remove(index)}>
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              )}
             </div>
             <div className="space-y-2">
               <FieldInput

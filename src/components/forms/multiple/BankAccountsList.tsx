@@ -1,9 +1,10 @@
 import { FC } from 'react'
 import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
-import { FieldInput } from '@components/fields/index'
+import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
 import { FormClientValues } from '@schemas/ClientSchema'
+import { TYPE_BANK_ACCOUNT } from '@constants/index'
 
 interface BankAccountsListProps {
   control: Control<FormClientValues>
@@ -18,6 +19,7 @@ const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
   return (
     <>
       <Button
+        type="button"
         variant="outline"
         onClick={() => append({ bank_name: '', account_number: '' })}
         className="mt-2"
@@ -30,6 +32,7 @@ const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
             <h3 className="text-lg font-semibold">Cuenta {index + 1}</h3>
             {fields.length > 1 && (
               <Button
+                type="button"
                 variant="outline"
                 size="icon"
                 onClick={() => remove(index)}
@@ -38,7 +41,7 @@ const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
               </Button>
             )}
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3">
             <FieldInput
               name={`bank_accounts.${index}.bank_name`}
               control={control}
@@ -52,6 +55,13 @@ const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
               label="Numero de cuenta"
               type="text"
               error={errors.bank_accounts?.[index]?.account_number}
+            />
+            <FieldSelect
+              name="country"
+              label="Tipo de cuenta"
+              placeholder="Selecciona una cuenta"
+              selectLabel="Cuenta Bancaría"
+              options={TYPE_BANK_ACCOUNT}
             />
           </div>
         </div>

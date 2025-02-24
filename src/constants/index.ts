@@ -1,2 +1,5 @@
 export { COUNTRIES } from './CountriesConstants'
 export { TYPE_CONTACT_SELECT } from './TypeContactSelectConstants'
+export { TYPE_BANK_ACCOUNT } from './TypeBankAccount'
+export { TYPE_PHONE } from './TypePhone'
+export { TYPE_EMAIL } from './TypeEmail'

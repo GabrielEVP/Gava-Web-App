@@ -1,9 +1,11 @@
 import { FC } from 'react'
 import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
-import { FieldInput } from '@components/fields/index'
+import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
 import { FormClientValues } from '@schemas/ClientSchema'
+import { TYPE_EMAIL } from '@constants/index'
+
 
 interface EmailsListProps {
   control: Control<FormClientValues>
@@ -19,6 +21,7 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
   return (
     <>
       <Button
+        type="button"
         variant="outline"
         onClick={() => append({ email: '' })}
         className="mt-2"
@@ -31,6 +34,7 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
             <h3 className="text-lg font-semibold">Emails {index + 1}</h3>
             {fields.length > 1 && (
               <Button
+                type="button"
                 variant="outline"
                 size="icon"
                 onClick={() => remove(index)}
@@ -41,11 +45,18 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <FieldInput
-              name={`phones.${index}.name`}
+              name={`emails.${index}.name`}
               control={control}
               label="Nombre"
               type="text"
               error={errors.emails?.[index]?.email}
+            />
+            <FieldSelect
+              name="type"
+              label="Tipo"
+              placeholder="Selecciona un Tipo"
+              selectLabel="Tipo"
+              options={TYPE_EMAIL}
             />
           </div>
         </div>

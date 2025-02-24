@@ -4,7 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
-import ClientSchema, { FormClientValues } from '@schemas/ClientSchema'
+import ClientSchema, {
+  FormClientValues,
+  DEFAULTCLIENTFORMVALUES,
+} from '@schemas/ClientSchema'
 
 const CompactFormClient = () => {
   const {
@@ -13,6 +16,8 @@ const CompactFormClient = () => {
     formState: { errors },
   } = useForm<FormClientValues>({
     resolver: zodResolver(ClientSchema),
+    defaultValues: DEFAULTCLIENTFORMVALUES as FormClientValues,
+    mode: 'onBlur',
   })
 
   const onSubmit: SubmitHandler<FormClientValues> = (data) => {

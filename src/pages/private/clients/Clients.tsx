@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { New, View, Edit, Trash } from '@components/buttons/index'
+import { SearchInput, Filter } from '@components/fields/index'
 import Table from '@components/dashboards/Table'
 import Sidebar from '@components/menus/SideBar'
 
@@ -17,7 +18,9 @@ const ClientsViews: FC = () => {
       <div className="rounded-lg p-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="mx-auto flex flex-wrap gap-4 items-center">
           <div className="flex-grow flex gap-2">
-            <div className="relative"></div>
+            <div className="relative">
+              <SearchInput />
+            </div>
           </div>
           <New title="Nuevo Cliente" route="/clients/new" />
         </div>

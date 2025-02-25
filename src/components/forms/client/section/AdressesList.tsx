@@ -51,7 +51,7 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
       >
         <Plus className="h-4 w-4 mr-2" /> Añadir Dirección
       </Button>
-      <div className='max-h-96 overflow-y-auto mt-4'>
+      <div className="max-h-96 overflow-y-auto mt-4">
         {fields.map((item, index) => (
           <div key={item.id} className="space-y-4 border p-4 rounded-md mb-4">
             <div className="flex justify-between items-center">
@@ -61,7 +61,8 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
                   type="button"
                   variant="outline"
                   size="icon"
-                  onClick={() => remove(index)}>
+                  onClick={() => remove(index)}
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               )}

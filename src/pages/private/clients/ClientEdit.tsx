@@ -1,5 +1,5 @@
 import Sidebar from '@components/menus/SideBar'
-import FullFormClient from '@components/forms/client/FullFormClient'
+import FullFormClient from '@components/forms/client/FormClient'
 import { Card, CardContent } from '@components/ui/card'
 import { Button } from '@components/ui/button'
 

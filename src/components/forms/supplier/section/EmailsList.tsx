@@ -3,13 +3,12 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@schemas/ClientSchema'
+import { FormSupplierValues } from '@schemas/SupplierSchema'
 import { TYPE_EMAIL } from '@constants/index'
 
-
 interface EmailsListProps {
-  control: Control<FormClientValues>
-  errors: FieldErrors<FormClientValues>
+  control: Control<FormSupplierValues>
+  errors: FieldErrors<FormSupplierValues>
 }
 
 const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
@@ -23,7 +22,7 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ email: '' })}
+        onClick={() => append({ email: '', type: '' })}
         className="mt-2"
       >
         <Plus className="h-4 w-4 mr-2" /> Añadir Emails

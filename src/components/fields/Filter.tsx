@@ -1,6 +1,6 @@
-// FilterDropdown.tsx
 import React, { useState } from 'react'
 import { SlidersHorizontal, ChevronDown } from 'lucide-react'
+import { Button } from '@components/ui/button'
 
 interface Option {
   value: string
@@ -12,20 +12,20 @@ interface SelectField {
   options: Option[]
 }
 
-interface FilterDropdownProps {
+interface FilterPopoverProps {
   selectFields: SelectField[]
 }
 
-const FilterDropdown: React.FC<FilterDropdownProps> = ({ selectFields }) => {
+const FieldFilter: React.FC<FilterPopoverProps> = ({ selectFields }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
 
   const toggleFilter = () => {
-    setIsFilterOpen(!isFilterOpen)
+    setIsFilterOpen((prev) => !prev)
   }
 
   const applyFilters = () => {
     setIsFilterOpen(false)
-    // Add your filter logic here
+    // Agrega aquí tu lógica de filtrado
   }
 
   return (
@@ -37,9 +37,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ selectFields }) => {
         <SlidersHorizontal className="h-4 w-4" />
         Filtros
         <ChevronDown
-          className={`h-4 w-4 transition-transform duration-200 ${
-            isFilterOpen ? 'rotate-180' : ''
-          }`}
+          className={`h-4 w-4 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`}
         />
       </button>
       {isFilterOpen && (
@@ -59,7 +57,12 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ selectFields }) => {
                 </select>
               </div>
             ))}
-            <div className="flex justify-end gap-2 pt-2"></div>
+            <div className="flex justify-end gap-2 pt-2">
+              <Button variant="outline" onClick={toggleFilter}>
+                Cancelar
+              </Button>
+              <Button onClick={applyFilters}>Aplicar</Button>
+            </div>
           </div>
         </div>
       )}
@@ -67,4 +70,4 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ selectFields }) => {
   )
 }
 
-export default FilterDropdown
+export default FieldFilter

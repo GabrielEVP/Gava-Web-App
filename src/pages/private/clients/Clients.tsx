@@ -1,8 +1,9 @@
 import { FC } from 'react'
 import { New, View, Edit, Trash } from '@components/buttons/index'
-import { SearchInput, Filter } from '@components/fields/index'
-import Table from '@components/dashboards/Table'
+import { SearchInput, FieldFilter } from '@components/fields/index'
+import DashboardTable from '@components/dashboards/Table'
 import Sidebar from '@components/menus/SideBar'
+import { TableCell, TableRow } from '@components/ui/index'
 
 const tableHeaders = ['Nombre Legal', 'R.I.F', 'Gremio']
 
@@ -12,51 +13,45 @@ const clients = [
   { name: 'Empresa C', rif: 'J-11223344-5', guild: 'Salud' },
 ]
 
+const selectFields = [
+  {
+    label: 'Tipo de Cuenta',
+    options: [
+      { value: '', text: 'Todos' },
+      { value: 'ahorro', text: 'Ahorro' },
+      { value: 'corriente', text: 'Corriente' },
+    ],
+  },
+]
+
 const ClientsViews: FC = () => {
   return (
     <Sidebar>
       <div className="rounded-lg p-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="mx-auto flex flex-wrap gap-4 items-center">
+        <div className="mx-auto flex flex-wrap">
           <div className="flex-grow flex gap-2">
             <div className="relative">
               <SearchInput />
             </div>
+            <FieldFilter selectFields={selectFields} />
           </div>
           <New title="Nuevo Cliente" route="/clients/new" />
         </div>
       </div>
-      <Table
-        headers={tableHeaders}
-        currentPage={1}
-        totalPages={1}
-        startIndex={0}
-        endIndex={clients.length}
-        totalItems={clients.length}
-      >
+      <DashboardTable headers={tableHeaders}>
         {clients.map((client, index) => (
-          <tr
-            key={index}
-            className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50/50 dark:hover:bg-gray-700/50 transition-colors"
-          >
-            <td className="px-6 py-2.5 text-xs text-gray-600 dark:text-gray-300">
-              {client.name}
-            </td>
-            <td className="px-6 py-2.5 text-xs text-gray-600 dark:text-gray-300">
-              {client.rif}
-            </td>
-            <td className="px-6 py-2.5 text-xs text-gray-600 dark:text-gray-300">
-              {client.guild}
-            </td>
-            <td className="px-6 py-2.5">
-              <div className="flex gap-1 justify-center">
-                <View route="/clients" />
-                <Edit route="/clients" />
-                <Trash />
-              </div>
-            </td>
-          </tr>
+          <TableRow key={index}>
+            <TableCell>{client.name}</TableCell>
+            <TableCell>{client.rif}</TableCell>
+            <TableCell>{client.guild}</TableCell>
+            <TableCell className="flex gap-2 justify-center">
+              <View route="/clients" />
+              <Edit route="/clients" />
+              <Trash />
+            </TableCell>
+          </TableRow>
         ))}
-      </Table>
+      </DashboardTable>
     </Sidebar>
   )
 }

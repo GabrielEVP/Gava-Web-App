@@ -1,4 +1,4 @@
-import FormSupplier from '@components/forms/supplier/FormSupplier'
+import FormSupplier from '@pages/supplier/components/forms/FormSupplier'
 import Sidebar from '@components/menus/SideBar'
 import { Card, CardContent, Button } from '@components/ui/index'
 

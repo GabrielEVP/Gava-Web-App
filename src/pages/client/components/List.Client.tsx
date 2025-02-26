@@ -8,9 +8,14 @@ import Client from '@pages/client/Clients'
 const tableHeaders = ['Nombre Legal', 'R.I.F', 'Gremio']
 
 const clients = [
-  { name: 'Empresa A', rif: 'J-12345678-9', guild: 'Tecnología' },
-  { name: 'Empresa B', rif: 'J-87654321-0', guild: 'Construcción' },
-  { name: 'Empresa C', rif: 'J-11223344-5', guild: 'Salud' },
+  {
+    id: 1,
+    name: 'Empresa A',
+    rif: 'J-12345678-9',
+    guild: 'Tecnología',
+  },
+  { id: 2, name: 'Empresa B', rif: 'J-87654321-0', guild: 'Construcción' },
+  { id: 3, name: 'Empresa C', rif: 'J-11223344-5', guild: 'Salud' },
 ]
 
 const selectFields = [
@@ -61,8 +66,8 @@ const ClientsListPage: FC = () => {
               </div>
             </TableCell>
             <TableCell className="flex gap-2 justify-center">
-              <View route="/clients" />
-              <Edit route="/clients" />
+              <View route={`/clients/${client.id}`} />
+              <Edit route={`/clients/edit/${client.id}`} />
               <Trash />
             </TableCell>
           </TableRow>

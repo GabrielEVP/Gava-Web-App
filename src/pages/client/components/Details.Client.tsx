@@ -1,59 +1,107 @@
-import { FC } from 'react'
-import { New, View, Edit, Trash } from '@components/buttons/index'
-import { SearchInput, FieldFilter } from '@components/fields/index'
-import DashboardTable from '@components/dashboards/Table'
-import Sidebar from '@components/menus/SideBar'
-import { TableCell, TableRow } from '@components/ui/index'
+import Client from '@pages/client/Clients'
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui'
+import Billing from '@components/dashboards/Billing'
 
-const tableHeaders = ['Nombre Legal', 'R.I.F', 'Gremio']
+export default function ClientDashboard() {
+  // Datos de ejemplo del cliente
+  const client = {
+    name: 'Acme Corporation',
+    email: 'contact@acmecorp.com',
+    phone: '+1 (555) 123-4567',
+    address: '123 Business St, Cityville, State 12345',
+  }
 
-const clients = [
-  { name: 'Empresa A', rif: 'J-12345678-9', guild: 'Tecnología' },
-  { name: 'Empresa B', rif: 'J-87654321-0', guild: 'Construcción' },
-  { name: 'Empresa C', rif: 'J-11223344-5', guild: 'Salud' },
-]
+  // Datos de ejemplo para facturas
+  const invoices = [
+    { id: 'INV001', date: '2023-05-01', totalAmount: 1500.0, status: 'Paid' },
+    {
+      id: 'INV002',
+      date: '2023-04-15',
+      totalAmount: 2200.5,
+      status: 'Pending',
+    },
+    {
+      id: 'INV003',
+      date: '2023-04-01',
+      totalAmount: 1800.75,
+      status: 'Overdue',
+    },
+    { id: 'INV004', date: '2023-03-15', totalAmount: 3000.25, status: 'Paid' },
+    { id: 'INV005', date: '2023-03-01', totalAmount: 1250.0, status: 'Paid' },
+  ]
 
-const selectFields = [
-  {
-    label: 'Tipo de Cuenta',
-    options: [
-      { value: '', text: 'Todos' },
-      { value: 'ahorro', text: 'Ahorro' },
-      { value: 'corriente', text: 'Corriente' },
-    ],
-  },
-]
+  // Datos de ejemplo para presupuestos
+  const quotes = [
+    { id: 'QUO001', date: '2023-05-10', totalAmount: 5000.0, status: 'Sent' },
+    {
+      id: 'QUO002',
+      date: '2023-04-25',
+      totalAmount: 3500.5,
+      status: 'Accepted',
+    },
+    {
+      id: 'QUO003',
+      date: '2023-04-12',
+      totalAmount: 7200.75,
+      status: 'Rejected',
+    },
+    {
+      id: 'QUO004',
+      date: '2023-03-28',
+      totalAmount: 4100.25,
+      status: 'Pending',
+    },
+    {
+      id: 'QUO005',
+      date: '2023-03-15',
+      totalAmount: 6300.0,
+      status: 'Accepted',
+    },
+  ]
 
-const ClientsListPage: FC = () => {
   return (
-    <Sidebar>
-      <div className="rounded-lg p-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="mx-auto flex flex-wrap">
-          <div className="flex-grow flex gap-2">
-            <div className="relative">
-              <SearchInput />
+    <Client>
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Client Information</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-2">
+            <div>
+              <strong>Name:</strong> {client.name}
             </div>
-            <FieldFilter selectFields={selectFields} />
+            <div>
+              <strong>Email:</strong> {client.email}
+            </div>
+            <div>
+              <strong>Phone:</strong> {client.phone}
+            </div>
+            <div>
+              <strong>Address:</strong> {client.address}
+            </div>
           </div>
-          <New title="Nuevo Cliente" route="/clients/new" />
-        </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Latest Invoices</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Billing data={invoices} />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Latest Quotes</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Billing data={quotes} />
+          </CardContent>
+        </Card>
       </div>
-      <DashboardTable headers={tableHeaders}>
-        {clients.map((client, index) => (
-          <TableRow key={index}>
-            <TableCell>{client.name}</TableCell>
-            <TableCell>{client.rif}</TableCell>
-            <TableCell>{client.guild}</TableCell>
-            <TableCell className="flex gap-2 justify-center">
-              <View route="/clients" />
-              <Edit route="/clients" />
-              <Trash />
-            </TableCell>
-          </TableRow>
-        ))}
-      </DashboardTable>
-    </Sidebar>
+    </Client>
   )
 }
-
-export default ClientsListPage

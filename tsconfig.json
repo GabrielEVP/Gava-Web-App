@@ -10,7 +10,7 @@
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@interfaces/*": ["src/interfaces/*"],
+      "@interfaces/*": ["src/models/*"],
       "@pages/*": ["src/pages/*"],
       "@router/*": ["src/router/*"],
       "@schemas/*": ["src/schemas/*"],

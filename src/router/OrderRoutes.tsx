@@ -1,8 +1,8 @@
 import { RouteObject } from 'react-router-dom'
-import OrderDetailsView from '@pages/orders/OrderDetails'
-import OrderEditView from '@pages/orders/OrderEdit'
-import OrderNewView from '@pages/orders/OrderNew'
-import OrdersView from '@pages/orders/Orders'
+import OrderDetailsView from '@pages/order/OrderDetails'
+import OrderEditView from '@pages/order/OrderEdit'
+import OrderNewView from '@pages/order/OrderNew'
+import OrdersView from '@pages/order/Orders'
 
 const OrderRoutes: Array<RouteObject> = [
   {

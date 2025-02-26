@@ -1,7 +1,6 @@
 import Sidebar from '@components/menus/SideBar'
-import FullFormClient from '@pages/clients/components/forms/FormClient'
-import { Card, CardContent } from '@components/ui/card'
-import { Button } from '@components/ui/button'
+import FormClient from '@pages/client/components/forms/FormClient'
+import { Card, CardContent, Button } from '@components/ui/index'
 
 const ClientsViews: React.FC = () => {
   return (
@@ -10,7 +9,7 @@ const ClientsViews: React.FC = () => {
         <div className="container">
           <Card>
             <CardContent className="p-6 shadow-xl">
-              <FullFormClient />
+              <FormClient />
               <hr className="mt-10 border-gray-200 dark:border-gray-700" />
               <div className="flex gap-2 justify-end pt-4">
                 <Button variant="outline">Cancelar</Button>

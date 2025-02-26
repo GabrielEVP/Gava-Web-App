@@ -7,7 +7,7 @@ import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import ClientSchema, {
   FormClientValues,
   DEFAULTCLIENTFORMVALUES,
-} from '@schemas/ClientSchema'
+} from '@pages/client/schemas/ClientSchema'
 
 const CompactFormClient = () => {
   const {

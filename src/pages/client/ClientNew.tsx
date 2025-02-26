@@ -1,4 +1,4 @@
-import FormClient from '@pages/clients/components/forms/FormClient'
+import FormClient from '@pages/client/components/forms/FormClient'
 import Sidebar from '@components/menus/SideBar'
 import { Card, CardContent, Button } from '@components/ui/index'
 

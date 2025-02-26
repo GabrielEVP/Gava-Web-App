@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import SupplierSchema, {
   FormSupplierValues,
   DEFAULTSUPPLIERFORMVALUES,
-} from '@schemas/SupplierSchema'
+} from '@pages/supplier/schemas/SupplierSchema'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
 import {
@@ -11,7 +11,7 @@ import {
   PhonesList,
   EmailsList,
   BankAccountsList,
-} from '@components/forms/multiple/index'
+} from '@pages/supplier/components/forms/section/index'
 
 import {
   FieldInput,

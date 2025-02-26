@@ -1,8 +1,8 @@
 import { RouteObject } from 'react-router-dom'
-import SupplierDetailsView from '@pages/suppliers/SupplierDetails'
-import SupplierEditView from '@pages/suppliers/SupplierEdit'
-import SupplierNewView from '@pages/suppliers/SupplierNew'
-import SuppliersView from '@pages/suppliers/Suppliers'
+import SupplierDetailsView from '@pages/supplier/SupplierDetails'
+import SupplierEditView from '@pages/supplier/SupplierEdit'
+import SupplierNewView from '@pages/supplier/SupplierNew'
+import SuppliersView from '@pages/supplier/Suppliers'
 
 const SupplierRoutes: Array<RouteObject> = [
   {

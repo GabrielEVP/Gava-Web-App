@@ -1,3 +1,3 @@
-export { default as CompactFormClient } from './CompactFormClient'
-export { default as FullFormClient } from './FullFormClient'
+export { default as CompactFormClient } from './CompactFormSupplier'
+export { default as FullFormClient } from './FormSupplier'
 

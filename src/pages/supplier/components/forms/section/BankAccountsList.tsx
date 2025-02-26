@@ -3,7 +3,7 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormSupplierValues } from '@schemas/SupplierSchema'
+import { FormSupplierValues } from '@pages/supplier/schemas/SupplierSchema'
 import { TYPE_BANK_ACCOUNT } from '@constants/index'
 
 interface BankAccountsListProps {

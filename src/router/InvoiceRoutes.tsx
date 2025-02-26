@@ -1,8 +1,8 @@
 import { RouteObject } from 'react-router-dom'
-import InvoiceDetailsView from '@pages/invoices/InvoiceDetails'
-import InvoiceEditView from '@pages/invoices/InvoiceEdit'
-import InvoiceNewView from '@pages/invoices/InvoiceNew'
-import InvoicesView from '@pages/invoices/Invoices'
+import InvoiceDetailsView from '@pages/invoice/InvoiceDetails'
+import InvoiceEditView from '@pages/invoice/InvoiceEdit'
+import InvoiceNewView from '@pages/invoice/InvoiceNew'
+import InvoicesView from '@pages/invoice/Invoices'
 
 const InvoiceRoutes: Array<RouteObject> = [
   {

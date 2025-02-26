@@ -71,9 +71,9 @@ const DEFAULTSUPPLIERFORMVALUES = {
     registration_number: '',
     type_Supplier: '',
     country: '',
-    phones: [{ name: '', phone: '' }],
-    emails: [{ email: '' }],
-    bank_accounts: [{ bank_name: '', account_number: '' }],
+    phones: [{ name: '', phone: '', type: '' }],
+    emails: [{ email: '', type: '' }],
+    bank_accounts: [{ bank_name: '', account_number: '', type: '' }],
     addresses: [
         {
             address: '',

@@ -5,19 +5,14 @@ import ClientSchema, {
   DEFAULTCLIENTFORMVALUES,
 } from '@pages/client/schemas/ClientSchema'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui'
 import {
   AdressesList,
   PhonesList,
   EmailsList,
   BankAccountsList,
-} from '@pages/client/components/forms/section/index'
-
-import {
-  FieldInput,
-  FieldTextArea,
-  FieldSelect,
-} from '@components/fields/index'
+} from '@pages/client/components/forms/section'
+import { FieldInput, FieldTextArea, FieldSelect } from '@components/fields'
 import {
   Building2,
   Contact,

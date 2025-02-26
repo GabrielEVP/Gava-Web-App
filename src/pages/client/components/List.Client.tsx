@@ -1,9 +1,9 @@
 import { FC } from 'react'
-import Client from '@pages/client/Clients' // Asegúrate de que la ruta esté correcta
 import { New, View, Edit, Trash } from '@components/buttons/index'
 import { SearchInput, FieldFilter } from '@components/fields/index'
+import { Card, TableCell, TableRow } from '@components/ui/index'
 import DashboardTable from '@components/dashboards/Table'
-import { TableCell, TableRow } from '@components/ui/index'
+import Client from '@pages/client/Clients'
 
 const tableHeaders = ['Nombre Legal', 'R.I.F', 'Gremio']
 
@@ -27,23 +27,39 @@ const selectFields = [
 const ClientsListPage: FC = () => {
   return (
     <Client>
-      <div className="rounded-lg p-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="mx-auto flex flex-wrap">
-          <div className="flex-grow flex gap-2">
-            <div className="relative">
-              <SearchInput />
-            </div>
-            <FieldFilter selectFields={selectFields} />
+      <Card className="w-full max-w-7xl mx-auto p-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-4">
+          <div className="relative flex-1">
+            <SearchInput />
           </div>
-          <New title="Nuevo Cliente" route="/clients/new" />
+          <div className="grid grid-cols-2">
+            <FieldFilter selectFields={selectFields} />
+            <New title="Nuevo Cliente" route="/clients/new" />
+          </div>
         </div>
-      </div>
+      </Card>
+
       <DashboardTable headers={tableHeaders}>
         {clients.map((client, index) => (
-          <TableRow key={index}>
-            <TableCell>{client.name}</TableCell>
-            <TableCell>{client.rif}</TableCell>
-            <TableCell>{client.guild}</TableCell>
+          <TableRow key={index} className="md:table-row mb-4 md:mb-0 border-b">
+            <TableCell className="font-medium md:table-cell block">
+              <div className="flex justify-between">
+                <span className="md:hidden font-bold">Nombre Legal:</span>
+                {client.name}
+              </div>
+            </TableCell>
+            <TableCell className="font-medium md:table-cell block">
+              <div className="flex justify-between">
+                <span className="md:hidden font-bold">RIF:</span>
+                {client.rif}
+              </div>
+            </TableCell>
+            <TableCell className="font-medium md:table-cell block">
+              <div className="flex justify-between">
+                <span className="md:hidden font-bold">Gremio:</span>
+                {client.guild}
+              </div>
+            </TableCell>
             <TableCell className="flex gap-2 justify-center">
               <View route="/clients" />
               <Edit route="/clients" />

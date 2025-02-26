@@ -23,6 +23,7 @@ export {
     TableHead,
     TableHeader,
     TableRow,
+    TableFooter,
 } from "./table"
 
 

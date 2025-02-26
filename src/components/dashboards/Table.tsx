@@ -13,10 +13,10 @@ interface DashboardTableProps {
 
 const DashboardTable = ({ headers, children }: DashboardTableProps) => {
   return (
-    <div className="pt-6">
-      <Card>
+    <Card className="mt-6">
+      <div className="overflow-x-auto">
         <Table className="w-full">
-          <TableHeader>
+          <TableHeader className="hidden md:table-header-group">
             <TableRow>
               {headers.map((header) => {
                 return (
@@ -25,13 +25,13 @@ const DashboardTable = ({ headers, children }: DashboardTableProps) => {
                   </TableHead>
                 )
               })}
-              <TableHead>Acciones</TableHead>
+              <TableHead className="w-[100px]">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>{children}</TableBody>
         </Table>
-      </Card>
-    </div>
+      </div>
+    </Card>
   )
 }
 

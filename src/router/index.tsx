@@ -5,7 +5,7 @@ import OrderRoutes from '@router/OrderRoutes'
 import ProductRoutes from '@router/ProductRoutes'
 import PurchaseRoutes from '@router/PurchaseRoutes'
 import SupplierRoutes from '@router/SupplierRoutes'
-import HomeView from '@pages/private/Home'
+import HomeView from '@pages/home/Home'
 
 const routes: Array<RouteObject> = [
   ...ClientRoutes,

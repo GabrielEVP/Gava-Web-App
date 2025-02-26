@@ -1,8 +1,8 @@
 import { RouteObject } from 'react-router-dom'
-import PurchaseDetailsView from '@pages/private/purchases/PurchaseDetails'
-import PurchaseEditView from '@pages/private/purchases/PurchaseEdit'
-import PurchaseNewView from '@pages/private/purchases/PurchaseNew'
-import PurchasesView from '@pages/private/purchases/Purchases'
+import PurchaseDetailsView from '@pages/purchases/PurchaseDetails'
+import PurchaseEditView from '@pages/purchases/PurchaseEdit'
+import PurchaseNewView from '@pages/purchases/PurchaseNew'
+import PurchasesView from '@pages/purchases/Purchases'
 
 const PurchaseRoutes: Array<RouteObject> = [
   {

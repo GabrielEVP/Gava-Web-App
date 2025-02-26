@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { SlidersHorizontal, ChevronDown } from 'lucide-react'
-import { Button } from '@components/ui/button'
+import { Button } from '@components/ui'
 
 interface Option {
   value: string

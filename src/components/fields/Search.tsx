@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Search } from 'lucide-react'
-import { Input } from '@components/ui/index'
+import { Input } from '@components/ui'
 
 interface SearchProps {
   placeholder: string

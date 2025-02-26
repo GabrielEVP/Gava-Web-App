@@ -1,6 +1,4 @@
-import { Label } from '@components/ui/label'
-import { Textarea } from '@components/ui/textarea'
-
+import { Label, Textarea } from '@components/ui'
 interface props {
   label: string
   name: string

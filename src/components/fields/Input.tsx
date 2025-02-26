@@ -1,5 +1,5 @@
 import { Control, Controller, FieldError } from 'react-hook-form'
-import { Input, Label } from '@components/ui/index'
+import { Input, Label } from '@components/ui'
 interface props {
   name: string
   control: Control<any>

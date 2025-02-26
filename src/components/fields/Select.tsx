@@ -7,7 +7,7 @@ import {
   SelectValue,
   SelectGroup,
   SelectLabel,
-} from '@components/ui/index'
+} from '@components/ui'
 
 interface SelectProps {
   name: string

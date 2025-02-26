@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom'
-import ClientRoutes from '@router/ClientRoutes'
+import ClientRoutes from '@pages/client/routes/Routes.Client'
 import InvoiceRoutes from '@router/InvoiceRoutes'
 import OrderRoutes from '@router/OrderRoutes'
 import ProductRoutes from '@router/ProductRoutes'

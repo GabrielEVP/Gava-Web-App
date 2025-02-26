@@ -1,13 +1,13 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { MapPin, User } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { MapPin, User } from 'lucide-react'
+import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
 import { FieldInput, FieldSelect } from '@components/fields/index'
-import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import ClientSchema, {
   FormClientValues,
   DEFAULTCLIENTFORMVALUES,
-} from '@pages/client/schemas/ClientSchema'
+} from '@pages/client/schemas/Client.Schemas'
 
 const CompactFormClient = () => {
   const {

@@ -3,7 +3,7 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@pages/client/schemas/ClientSchema'
+import { FormClientValues } from '@pages/client/schemas/Client.Schemas'
 import { TYPE_PHONE } from '@constants/index'
 
 interface PhonesListProps {

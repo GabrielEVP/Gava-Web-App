@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Client from '@pages/client/Clients' // Asegúrate de que la ruta esté correcta
@@ -32,9 +34,13 @@ import {
 } from 'lucide-react'
 
 const FullFormClient = () => {
+  const { id } = useParams() // Captura el id de la URL
+  const [loading, setLoading] = useState(false)
+
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormClientValues>({
     resolver: zodResolver(ClientSchema),
@@ -42,9 +48,13 @@ const FullFormClient = () => {
     mode: 'onBlur',
   })
 
+  useEffect(() => {}, [id, setValue])
+
   const onSubmit: SubmitHandler<FormClientValues> = (data) => {
     console.log(data)
   }
+
+  if (loading) return <p>Cargando...</p>
 
   return (
     <Client>

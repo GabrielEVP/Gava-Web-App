@@ -11,7 +11,7 @@ import {
   PhonesList,
   EmailsList,
   BankAccountsList,
-} from '@pages/supplier/components/forms/section/index'
+} from '@pages/supplier/components/section/index'
 
 import {
   FieldInput,

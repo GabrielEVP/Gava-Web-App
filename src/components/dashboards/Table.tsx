@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@components/ui/index'
+} from '@components/ui'
 interface DashboardTableProps {
   headers: string[]
   children: React.ReactNode

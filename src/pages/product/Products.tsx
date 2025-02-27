@@ -1,11 +1,12 @@
+import { FC, ReactNode } from 'react'
 import Sidebar from '@components/menus/SideBar'
 
-const ClientsViews: React.FC = () => {
-  return (
-    <Sidebar>
-      <>a</>
-    </Sidebar>
-  )
+interface ProductProps {
+  children: ReactNode
 }
 
-export default ClientsViews
+const ProductContainer: FC<ProductProps> = ({ children }) => {
+  return <Sidebar>{children}</Sidebar>
+}
+
+export default ProductContainer

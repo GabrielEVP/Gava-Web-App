@@ -1,10 +1,12 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Supplier from '@pages/supplier/Suppliers' // Asegúrate de que la ruta esté correcta
-import SupplierSchema, {
-  FormSupplierValues,
-  DEFAULTSUPPLIERFORMVALUES,
-} from '@pages/supplier/schemas/SupplierSchema'
+import Client from '@pages/client/Clients' // Asegúrate de que la ruta esté correcta
+import ClientSchema, {
+  FormClientValues,
+  DEFAULTCLIENTFORMVALUES,
+} from '@pages/client/schemas/Client.Schemas'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import {
   Card,
@@ -14,19 +16,14 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@components/ui/index'
+} from '@components/ui'
 import {
   AdressesList,
   PhonesList,
   EmailsList,
   BankAccountsList,
-} from '@pages/supplier/components/section/index'
-
-import {
-  FieldInput,
-  FieldTextArea,
-  FieldSelect,
-} from '@components/fields/index'
+} from '@pages/client/components/section'
+import { FieldInput, FieldTextArea, FieldSelect } from '@components/fields'
 import {
   Building2,
   Contact,
@@ -36,23 +33,31 @@ import {
   User,
 } from 'lucide-react'
 
-const FullFormSupplier = () => {
+const FullFormClient = () => {
+  const { id } = useParams() // Captura el id de la URL
+  const [loading, setLoading] = useState(false)
+
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<FormSupplierValues>({
-    resolver: zodResolver(SupplierSchema),
-    defaultValues: DEFAULTSUPPLIERFORMVALUES as FormSupplierValues,
+  } = useForm<FormClientValues>({
+    resolver: zodResolver(ClientSchema),
+    defaultValues: DEFAULTCLIENTFORMVALUES as FormClientValues,
     mode: 'onBlur',
   })
 
-  const onSubmit: SubmitHandler<FormSupplierValues> = (data) => {
+  useEffect(() => {}, [id, setValue])
+
+  const onSubmit: SubmitHandler<FormClientValues> = (data) => {
     console.log(data)
   }
 
+  if (loading) return <p>Cargando...</p>
+
   return (
-    <Supplier>
+    <Client>
       <div className="container">
         <Card>
           <CardContent className="p-6 shadow-xl">
@@ -163,7 +168,7 @@ const FullFormSupplier = () => {
                       control={control}
                       label="Días de Crédito"
                       type="number"
-                      error={errors.credit_day_limit}
+                      error={errors.credit_days}
                     />
                     <FieldInput
                       name="limit_credit"
@@ -171,6 +176,22 @@ const FullFormSupplier = () => {
                       label="Límite de Crédito"
                       type="number"
                       error={errors.limit_credit}
+                    />
+                  </div>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <FieldInput
+                      name="tax_rate"
+                      control={control}
+                      label="Tasa de Impuesto por Defecto"
+                      type="number"
+                      error={errors.tax_rate}
+                    />
+                    <FieldInput
+                      name="discount"
+                      control={control}
+                      label="Descuento por Defecto"
+                      type="number"
+                      error={errors.discount}
                     />
                   </div>
                 </TabsContent>
@@ -187,8 +208,8 @@ const FullFormSupplier = () => {
           </CardContent>
         </Card>
       </div>
-    </Supplier>
+    </Client>
   )
 }
 
-export default FullFormSupplier
+export default FullFormClient

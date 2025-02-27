@@ -3,11 +3,11 @@ import { New, View, Edit, Trash } from '@components/buttons/index'
 import { SearchInput, FieldFilter } from '@components/fields/index'
 import { Card, TableCell, TableRow } from '@components/ui/index'
 import DashboardTable from '@components/dashboards/Table'
-import Supplier from '@pages/supplier/Suppliers'
+import Client from '@pages/client/Clients'
 
 const tableHeaders = ['Nombre Legal', 'R.I.F', 'Gremio']
 
-const suppliers = [
+const clients = [
   {
     id: 1,
     name: 'Empresa A',
@@ -29,9 +29,9 @@ const selectFields = [
   },
 ]
 
-const ListSupplierPages: FC = () => {
+const ClientsListPage: FC = () => {
   return (
-    <Supplier>
+    <Client>
       <Card className="w-full max-w-7xl mx-auto p-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-4">
           <div className="relative flex-1">
@@ -39,42 +39,42 @@ const ListSupplierPages: FC = () => {
           </div>
           <div className="grid grid-cols-2">
             <FieldFilter selectFields={selectFields} />
-            <New title="Nuevo Proveedor" route="/suppliers/new" />
+            <New title="Nuevo Cliente" route="/clients/new" />
           </div>
         </div>
       </Card>
 
       <DashboardTable headers={tableHeaders}>
-        {suppliers.map((supplier, index) => (
+        {clients.map((client, index) => (
           <TableRow key={index} className="md:table-row mb-4 md:mb-0 border-b">
             <TableCell className="font-medium md:table-cell block">
               <div className="flex justify-between">
                 <span className="md:hidden font-bold">Nombre Legal:</span>
-                {supplier.name}
+                {client.name}
               </div>
             </TableCell>
             <TableCell className="font-medium md:table-cell block">
               <div className="flex justify-between">
                 <span className="md:hidden font-bold">RIF:</span>
-                {supplier.rif}
+                {client.rif}
               </div>
             </TableCell>
             <TableCell className="font-medium md:table-cell block">
               <div className="flex justify-between">
                 <span className="md:hidden font-bold">Gremio:</span>
-                {supplier.guild}
+                {client.guild}
               </div>
             </TableCell>
             <TableCell className="flex gap-2 justify-center">
-              <View route={`/suppliers/${supplier.id}`} />
-              <Edit route={`/suppliers/edit/${supplier.id}`} />
+              <View route={`/clients/${client.id}`} />
+              <Edit route={`/clients/edit/${client.id}`} />
               <Trash />
             </TableCell>
           </TableRow>
         ))}
       </DashboardTable>
-    </Supplier>
+    </Client>
   )
 }
 
-export default ListSupplierPages
+export default ClientsListPage

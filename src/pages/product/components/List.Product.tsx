@@ -39,7 +39,7 @@ const ClientsListPage: FC = () => {
           </div>
           <div className="grid grid-cols-2">
             <FieldFilter selectFields={selectFields} />
-            <New title="Nuevo Cliente" route="/clients/new" />
+            <New title="Nuevo Producto" route="/products/new" />
           </div>
         </div>
       </Card>

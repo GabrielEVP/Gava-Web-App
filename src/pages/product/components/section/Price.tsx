@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import { ChevronsUpDown } from 'lucide-react'
 import { z } from 'zod'
@@ -35,10 +33,6 @@ export default function PriceInput() {
 
   // Format the display value for the main input
   const getDisplayValue = () => {
-    const activePrice = prices.standard ?? prices.premium ?? prices.discount
-    if (activePrice !== undefined) {
-      return `$${activePrice.toFixed(2)}`
-    }
     return 'Seleccionar precio'
   }
 

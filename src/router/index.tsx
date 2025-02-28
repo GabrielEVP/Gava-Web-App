@@ -1,22 +1,22 @@
 import { RouteObject } from 'react-router-dom'
-import ClientRoutes from '@pages/client/routes/Routes.Client'
-import InvoiceRoutes from '@router/InvoiceRoutes'
-import OrderRoutes from '@router/OrderRoutes'
-import ProductRoutes from '@pages/product/routes/Routes.Product'
-import PurchaseRoutes from '@router/PurchaseRoutes'
-import SupplierRoutes from '@pages/supplier/routes/Routes.Supplier'
-import HomeView from '@pages/home/Home'
+import Client from '@pages/client/routes/Routes.Client'
+import Invoice from '@pages/invoice/routes/Routes.Invoice'
+import Order from '@pages/order/routes/Routes.Order'
+import Product from '@pages/product/routes/Routes.Product'
+import Purchase from '@pages/purchase/routes/Routes.Purchase'
+import Supplier from '@pages/supplier/routes/Routes.Supplier'
+import Home from '@pages/home/Home'
 
 const routes: Array<RouteObject> = [
-  ...ClientRoutes,
-  ...InvoiceRoutes,
-  ...OrderRoutes,
-  ...ProductRoutes,
-  ...PurchaseRoutes,
-  ...SupplierRoutes,
+  ...Client,
+  ...Invoice,
+  ...Order,
+  ...Product,
+  ...Purchase,
+  ...Supplier,
   {
     path: '/',
-    element: <HomeView />,
+    element: <Home />,
   },
   {
     path: '*',

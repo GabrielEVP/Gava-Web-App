@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import { Check, ChevronsUpDown, Plus, X } from 'lucide-react'
 import { z } from 'zod'

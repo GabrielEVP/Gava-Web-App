@@ -66,8 +66,8 @@ const ClientsListPage: FC = () => {
               </div>
             </TableCell>
             <TableCell className="flex gap-2 justify-center">
-              <View route={`/clients/${client.id}`} />
-              <Edit route={`/clients/edit/${client.id}`} />
+              <View route={`/products/${client.id}`} />
+              <Edit route={`/products/edit/${client.id}`} />
               <Trash />
             </TableCell>
           </TableRow>

@@ -3,34 +3,33 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@pages/client/schemas/Client.Schemas'
-import { TYPE_EMAIL } from '@constants/index'
+import { FormClientValues } from '@pages/client/presentation/schemas/Client.Schemas'
+import { TYPE_BANK_ACCOUNT } from '@constants/index'
 
-interface EmailsListProps {
+interface BankAccountsListProps {
   control: Control<FormClientValues>
   errors: FieldErrors<FormClientValues>
 }
 
-const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
+const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'emails',
+    name: 'bank_accounts',
   })
-
   return (
     <>
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ email: '' })}
+        onClick={() => append({ bank_name: '', account_number: '' })}
         className="mt-2"
       >
-        <Plus className="h-4 w-4 mr-2" /> Añadir Emails
+        <Plus className="h-4 w-4 mr-2" /> Añadir Cuenta Bancaría
       </Button>
       {fields.map((item, index) => (
         <div key={item.id} className="space-y-4 border p-4 rounded-md">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Emails {index + 1}</h3>
+            <h3 className="text-lg font-semibold">Cuenta {index + 1}</h3>
             {fields.length > 1 && (
               <Button
                 type="button"
@@ -42,20 +41,27 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
               </Button>
             )}
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3">
             <FieldInput
-              name={`emails.${index}.name`}
+              name={`bank_accounts.${index}.bank_name`}
               control={control}
-              label="Nombre"
+              label="Nombre del Banco"
               type="text"
-              error={errors.emails?.[index]?.email}
+              error={errors.bank_accounts?.[index]?.bank_name}
+            />
+            <FieldInput
+              name={`bank_accounts.${index}.account_number`}
+              control={control}
+              label="Numero de cuenta"
+              type="text"
+              error={errors.bank_accounts?.[index]?.account_number}
             />
             <FieldSelect
-              name="type"
-              label="Tipo"
-              placeholder="Selecciona un Tipo"
-              selectLabel="Tipo"
-              options={TYPE_EMAIL}
+              name="country"
+              label="Tipo de cuenta"
+              placeholder="Selecciona una cuenta"
+              selectLabel="Cuenta Bancaría"
+              options={TYPE_BANK_ACCOUNT}
             />
           </div>
         </div>
@@ -64,4 +70,4 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
   )
 }
 
-export default EmailsList
+export default BankAccountsList

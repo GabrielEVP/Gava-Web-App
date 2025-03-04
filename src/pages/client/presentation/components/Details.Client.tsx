@@ -1,4 +1,4 @@
-import Client from '@pages/client/Clients'
+import Client from '@pages/client/presentation/Clients'
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui'
 import Billing from '@components/dashboards/Billing'
 

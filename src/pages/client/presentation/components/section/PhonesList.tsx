@@ -3,33 +3,33 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@pages/client/schemas/Client.Schemas'
-import { TYPE_BANK_ACCOUNT } from '@constants/index'
+import { FormClientValues } from '@pages/client/presentation/schemas/Client.Schemas'
+import { TYPE_PHONE } from '@constants/index'
 
-interface BankAccountsListProps {
+interface PhonesListProps {
   control: Control<FormClientValues>
   errors: FieldErrors<FormClientValues>
 }
 
-const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
+const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'bank_accounts',
+    name: 'phones',
   })
   return (
     <>
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ bank_name: '', account_number: '' })}
+        onClick={() => append({ name: '', phone: '' })}
         className="mt-2"
       >
-        <Plus className="h-4 w-4 mr-2" /> Añadir Cuenta Bancaría
+        <Plus className="h-4 w-4 mr-2" /> Añadir Teléfono
       </Button>
       {fields.map((item, index) => (
         <div key={item.id} className="space-y-4 border p-4 rounded-md">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Cuenta {index + 1}</h3>
+            <h3 className="text-lg font-semibold">Teléfono {index + 1}</h3>
             {fields.length > 1 && (
               <Button
                 type="button"
@@ -43,25 +43,25 @@ const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             <FieldInput
-              name={`bank_accounts.${index}.bank_name`}
+              name={`phones.${index}.name`}
               control={control}
-              label="Nombre del Banco"
+              label="Nombre"
               type="text"
-              error={errors.bank_accounts?.[index]?.bank_name}
+              error={errors.phones?.[index]?.name}
             />
             <FieldInput
-              name={`bank_accounts.${index}.account_number`}
+              name={`phones.${index}.phone`}
               control={control}
-              label="Numero de cuenta"
+              label="Teléfono"
               type="text"
-              error={errors.bank_accounts?.[index]?.account_number}
+              error={errors.phones?.[index]?.phone}
             />
             <FieldSelect
-              name="country"
-              label="Tipo de cuenta"
-              placeholder="Selecciona una cuenta"
-              selectLabel="Cuenta Bancaría"
-              options={TYPE_BANK_ACCOUNT}
+              name="type"
+              label="Tipo"
+              placeholder="Selecciona un Tipo"
+              selectLabel="Tipo"
+              options={TYPE_PHONE}
             />
           </div>
         </div>
@@ -70,4 +70,4 @@ const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
   )
 }
 
-export default BankAccountsList
+export default PhonesList

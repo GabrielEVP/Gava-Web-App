@@ -27,6 +27,10 @@ export default defineConfig({
         replacement: path.resolve(path.join(__dirname, 'src/pages'))
       },
       {
+        find: '@models',
+        replacement: path.resolve(path.join(__dirname, 'src/models'))
+      },
+      {
         find: '@router',
         replacement: path.resolve(path.join(__dirname, 'src/router'))
       },

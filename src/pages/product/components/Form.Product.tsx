@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Client from '@pages/client/Clients' // Asegúrate de que la ruta esté correcta
+import Client from '@pages/client/presentation/Clients' // Asegúrate de que la ruta esté correcta
 import ClientSchema, {
   FormClientValues,
   DEFAULTCLIENTFORMVALUES,
-} from '@pages/client/schemas/Client.Schemas'
+} from '@pages/client/presentation/schemas/Client.Schemas'
 import { FieldInput, FieldTextArea } from '@components/fields'
 import { Button } from '@components/ui'
 import CategoryMultiSelect from '@pages/product/components/section/Category'

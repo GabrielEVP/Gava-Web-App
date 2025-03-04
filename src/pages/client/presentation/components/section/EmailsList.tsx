@@ -3,33 +3,34 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@pages/client/schemas/Client.Schemas'
-import { TYPE_PHONE } from '@constants/index'
+import { FormClientValues } from '@pages/client/presentation/schemas/Client.Schemas'
+import { TYPE_EMAIL } from '@constants/index'
 
-interface PhonesListProps {
+interface EmailsListProps {
   control: Control<FormClientValues>
   errors: FieldErrors<FormClientValues>
 }
 
-const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
+const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'phones',
+    name: 'emails',
   })
+
   return (
     <>
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ name: '', phone: '' })}
+        onClick={() => append({ email: '' })}
         className="mt-2"
       >
-        <Plus className="h-4 w-4 mr-2" /> Añadir Teléfono
+        <Plus className="h-4 w-4 mr-2" /> Añadir Emails
       </Button>
       {fields.map((item, index) => (
         <div key={item.id} className="space-y-4 border p-4 rounded-md">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Teléfono {index + 1}</h3>
+            <h3 className="text-lg font-semibold">Emails {index + 1}</h3>
             {fields.length > 1 && (
               <Button
                 type="button"
@@ -41,27 +42,20 @@ const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
               </Button>
             )}
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2">
             <FieldInput
-              name={`phones.${index}.name`}
+              name={`emails.${index}.name`}
               control={control}
               label="Nombre"
               type="text"
-              error={errors.phones?.[index]?.name}
-            />
-            <FieldInput
-              name={`phones.${index}.phone`}
-              control={control}
-              label="Teléfono"
-              type="text"
-              error={errors.phones?.[index]?.phone}
+              error={errors.emails?.[index]?.email}
             />
             <FieldSelect
               name="type"
               label="Tipo"
               placeholder="Selecciona un Tipo"
               selectLabel="Tipo"
-              options={TYPE_PHONE}
+              options={TYPE_EMAIL}
             />
           </div>
         </div>
@@ -70,4 +64,4 @@ const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
   )
 }
 
-export default PhonesList
+export default EmailsList

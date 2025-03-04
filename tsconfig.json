@@ -12,6 +12,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@interfaces/*": ["src/models/*"],
       "@pages/*": ["src/pages/*"],
+      "@models/*": ["src/models/*"],
       "@router/*": ["src/router/*"],
       "@schemas/*": ["src/schemas/*"],
       "@services/*": ["src/services/*"]

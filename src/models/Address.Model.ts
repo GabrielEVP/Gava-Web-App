@@ -1,4 +1,4 @@
-class Address {
+export class Address {
     id: number
     address: string
     state: string
@@ -17,5 +17,3 @@ class Address {
         this.isBilling = isBilling
     }
 }
-
-export default Address

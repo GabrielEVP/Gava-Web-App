@@ -1,4 +1,4 @@
-import ClientRepository from "../domain/repository/IClient.Respository";
+import { ClientRepository } from "../domain/repository/IClient.Respository";
 
 export class DeleteClient {
     private readonly clientRepository: ClientRepository;

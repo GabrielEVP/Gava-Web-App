@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom'
-import { List, Details, Form } from '@pages/client/components'
+import { List, Details, Form } from '@pages/client/presentation/components'
 
 const ClientRoutes: Array<RouteObject> = [
   {

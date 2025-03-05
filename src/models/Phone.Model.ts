@@ -1,4 +1,4 @@
-class Phone {
+export class Phone {
     id: number
     name: string
     phone: string
@@ -20,5 +20,3 @@ class Phone {
         return phoneRegex.test(phone)
     }
 }
-
-export default Phone

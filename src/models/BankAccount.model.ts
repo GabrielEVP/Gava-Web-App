@@ -20,5 +20,3 @@ export class BankAccount {
         return accountNumberRegex.test(accountNumber);
     }
 }
-
-export default BankAccount

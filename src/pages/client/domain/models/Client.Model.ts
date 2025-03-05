@@ -1,6 +1,6 @@
 import { Address, Email, Phone, BankAccount } from "@models/index"
 
-class Client {
+export class Client {
     id: number
     registration_number: string
     legal_name: string
@@ -60,30 +60,30 @@ class Client {
         this.validateBankAccounts()
     }
 
-    private validateRegistrationNumber(): void {
+    public validateRegistrationNumber(): void {
         if (!this.registration_number || this.registration_number.trim() === "") {
             throw new Error("The registration number is required.");
         }
     }
 
-    private validateLegalName(): void {
+    public validateLegalName(): void {
         if (!this.legal_name || this.legal_name.trim() === "") {
             throw new Error("The legal name is required.");
         }
     }
 
-    private validateTaxRate(): void {
+    public validateTaxRate(): void {
         if (this.tax_rate < 0 || this.tax_rate > 100) {
             throw new Error("Invalid tax rate. It should be between 0 and 100.")
         }
     }
-    private validateDiscount() {
+    public validateDiscount() {
         if (this.discount < 0 || this.discount > 100) {
             throw new Error("Invalid discount. It should be between 0 and 100.")
         }
     }
 
-    private validateEmails(): void {
+    public validateEmails(): void {
         this.emails.forEach((email) => {
             if (!(email instanceof Email)) {
                 throw new Error("Invalid email format")
@@ -91,7 +91,7 @@ class Client {
         })
     }
 
-    private validatePhones(): void {
+    public validatePhones(): void {
         this.phones.forEach((phone) => {
             if (!(phone instanceof Phone)) {
                 throw new Error("Invalid phone number format")
@@ -99,7 +99,7 @@ class Client {
         })
     }
 
-    private validateBankAccounts(): void {
+    public validateBankAccounts(): void {
         this.bankAccounts.forEach((account) => {
             if (!(account instanceof BankAccount)) {
                 throw new Error("Invalid bank account format")
@@ -107,5 +107,3 @@ class Client {
         })
     }
 }
-
-export default Client

@@ -1,6 +1,5 @@
-import ClientRepository from "../domain/repository/IClient.Respository";
-import Client from "../domain/models/Client.Model";
-
+import { ClientRepository } from "../domain/repository/IClient.Respository";
+import { Client } from "../domain/models/Client.Model";
 export class FindAllClients {
     private readonly clientRepository: ClientRepository;
 

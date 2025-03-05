@@ -1,6 +1,6 @@
-export { default as Address } from './Address.Model';
-export { default as BankAccount } from './BankAccount.model';
-export { default as Email } from './Email.Model';
-export { default as Phone } from './Phone.Model';
-export { default as User } from './User.Model';
-
+export * from './Address.Model';
+export * from './BankAccount.model';
+export * from './Email.Model';
+export * from './Phone.Model';
+export * from './TypePayment';
+export * from './User.Model';

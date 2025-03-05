@@ -1,0 +1,58 @@
+{
+  "id": 1,
+  "registration_number": "123456",
+  "legal_name": "Test Company",
+  "type": "JU",
+  "website": "https://example.com",
+  "country": "USA",
+  "tax_rate": 15,
+  "discount": 5,
+  "notes": "Test client",
+  "user_id": 1,
+  "address": [
+    {
+      "id": 1,
+      "street": "Solf Larea",
+      "city": "Lara",
+      "state": "New York",
+      "zip": "48330",
+      "isPrimary": true
+    },
+    {
+      "id": 2,
+      "street": "Solf Larea",
+      "city": "Lara",
+      "state": "New York",
+      "zip": "48330",
+      "isPrimary": false
+    }
+  ],
+  "emails": [
+    {
+      "id": 1,
+      "email": "other@gmail.com",
+      "type": "Work"
+    },
+    {
+      "id": 2,
+      "email": "other2@gmail.com",
+      "type": "Personal"
+    }
+  ],
+  "phones": [
+    {
+      "id": 1,
+      "name": "Gabriel",
+      "number": "6839182930",
+      "type": "Personal"
+    }
+  ],
+  "bankAccounts": [
+    {
+      "id": 1,
+      "bankName": "BBVA",
+      "accountNumber": "276473949947696",
+      "type": "OT"
+    }
+  ]
+}

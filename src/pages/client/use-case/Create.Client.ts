@@ -1,7 +1,7 @@
-import ClientRepository from "../domain/repository/IClient.Respository";
-import Client from "../domain/models/Client.Model";
+import { ClientRepository } from "../domain/repository/IClient.Respository";
+import { Client } from "../domain/models/Client.Model";
 
-class CreateClient {
+export class CreateClient {
     private readonly clientRepository: ClientRepository;
 
     constructor(clientRepository: ClientRepository) {
@@ -13,6 +13,4 @@ class CreateClient {
         return this.clientRepository.create(client);
     }
 }
-
-export default CreateClient
 

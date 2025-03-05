@@ -1,4 +1,4 @@
-class Email {
+export class Email {
     id: number
     email: string
     type: 'Work' | 'Personal'
@@ -18,6 +18,3 @@ class Email {
         return emailRegex.test(email)
     }
 }
-
-
-export default Email

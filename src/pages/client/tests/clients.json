@@ -15,16 +15,16 @@
       "street": "Solf Larea",
       "city": "Lara",
       "state": "New York",
-      "zip": "48330",
-      "isPrimary": true
+      "postalCode": "48330",
+      "isBilling": true
     },
     {
       "id": 2,
       "street": "Solf Larea",
       "city": "Lara",
       "state": "New York",
-      "zip": "48330",
-      "isPrimary": false
+      "postalCode": "48330",
+      "isBilling": false
     }
   ],
   "emails": [
@@ -43,7 +43,7 @@
     {
       "id": 1,
       "name": "Gabriel",
-      "number": "6839182930",
+      "phone": "6839182930",
       "type": "Personal"
     }
   ],

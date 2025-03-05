@@ -1,154 +1,143 @@
+import { describe, it, expect, beforeEach, vi } from "bun:test";
+import { CreateClient, DeleteClient, FindAllClients, FindClientById, UpdateClient } from '../use-case/index'
 import { ClientJsonAdapter } from "../adapters/Json.Adapter.Client";
-import { CreateClient, DeleteClient, FindAllClients, FindClientById, UpdateClient } from "../use-case/index";
-import { Address, Email, Phone, BankAccount } from "@models/index"
 import { Client } from "../domain/models/Client.Model";
 import fs from "fs/promises";
 import path from "path";
 
-const jsonFilePath = path.join(__dirname, 'clients.json');
+const mockClientRepository = {
+    create: vi.fn(),
+    update: vi.fn(),
+    findById: vi.fn(),
+    findAll: vi.fn(),
+    delete: vi.fn()
+};
 
-jest.mock("fs/promises");
+const mockCreateClient = new CreateClient(mockClientRepository);
+mockCreateClient.execute = vi.fn();
+
+const mockDeleteClient = new DeleteClient(mockClientRepository);
+mockDeleteClient.execute = vi.fn();
+
+const mockFindAllClients = new FindAllClients(mockClientRepository);
+mockFindAllClients.execute = vi.fn();
+
+const mockFindClientById = new FindClientById(mockClientRepository);
+mockFindClientById.execute = vi.fn();
+
+const mockUpdateClient = new UpdateClient(mockClientRepository);
+mockUpdateClient.execute = vi.fn();
+
+vi.mock("fs/promises", () => ({
+    readFile: vi.fn(),
+    writeFile: vi.fn()
+}));
 
 describe("ClientJsonAdapter", () => {
-    let clientJsonAdapter: ClientJsonAdapter;
+    let adapter: ClientJsonAdapter;
+    const jsonFilePath = path.join(__dirname, "clients.json");
+    const mockClients: Client[] = [
+        {
+            id: 1,
+            registration_number: "123456",
+            legal_name: "Test Company",
+            type: "JU",
+            website: "https://example.com",
+            country: "USA",
+            tax_rate: 15,
+            discount: 5,
+            notes: "Test client",
+            user_id: 1,
+            address: [
+                { id: 1, address: "Solf Larea", city: "Lara", state: "New York", postalCode: "48330", municipality: "Some Municipality", isBilling: true },
+                { id: 2, address: "Solf Larea", city: "Lara", state: "New York", postalCode: "48330", municipality: "Some Municipality", isBilling: false },
+            ],
+            emails: [
+                { id: 1, email: "other@gmail.com", type: "Work" },
+                { id: 2, email: "other2@gmail.com", type: "Work" },
+            ],
+            phones: [
+                { id: 1, name: "Gabriel", phone: "6839182930", type: "Personal" }
+            ],
+            bankAccounts: [
+                { id: 1, name: "BBVA", accountNumber: "276473949947696", type: "OT" }
+            ]
+        }
+    ];
 
     beforeEach(() => {
-        const mockClientRepository = {
-            create: jest.fn(),
-            delete: jest.fn(),
-            findAll: jest.fn(),
-            findById: jest.fn(),
-            update: jest.fn()
-        };
-
-        const createClient = new CreateClient(mockClientRepository);
-        const deleteClient = new DeleteClient(mockClientRepository);
-        const findAllClients = new FindAllClients(mockClientRepository);
-        const findClientById = new FindClientById(mockClientRepository);
-        const updateClient = new UpdateClient(mockClientRepository);
-
-        clientJsonAdapter = new ClientJsonAdapter(createClient, deleteClient, findAllClients, findClientById, updateClient);
+        adapter = new ClientJsonAdapter(
+            mockCreateClient,
+            mockDeleteClient,
+            mockFindAllClients,
+            mockFindClientById,
+            mockUpdateClient
+        );
+        vi.resetAllMocks();
     });
 
-    afterEach(() => {
-        jest.resetAllMocks();
+    it("should read clients from file", async () => {
+        (fs.readFile as vi.Mock).mockResolvedValue(JSON.stringify(mockClients));
+        const clients = await adapter.findAll();
+        expect(clients).toEqual(mockClients);
     });
 
-    test("create() should add a client and write to JSON file", async () => {
-        const mockClient: Client = ClientSchema;
-        const mockClients: Client[] = [mockClient];
-
-        // Mock de la lectura del archivo JSON para retornar clientes previos
-        (fs.readFile as jest.Mock).mockResolvedValue(JSON.stringify(mockClients));
-
-        // Mock de la escritura del archivo JSON
-        (fs.writeFile as jest.Mock).mockResolvedValue(undefined);
-
-        const result = await clientJsonAdapter.create(mockClient);
-
-        expect(result).toEqual(mockClient);
-        expect(fs.writeFile).toHaveBeenCalledWith(jsonFilePath, JSON.stringify([mockClient], null, 2));
+    it("should write clients to file", async () => {
+        await adapter["writeClientsToFile"](mockClients);
+        expect(fs.writeFile).toHaveBeenCalledWith(jsonFilePath, JSON.stringify(mockClients, null, 2));
     });
 
-    test("findAll() should return a list of clients from JSON", async () => {
-        const mockClients: Client[] = [ClientSchema];
-
-        // Mock de la lectura del archivo JSON
-        (fs.readFile as jest.Mock).mockResolvedValue(JSON.stringify(mockClients));
-
-        const result = await clientJsonAdapter.findAll();
-
-        expect(result).toEqual(mockClients);
+    it("should create a new client", async () => {
+        (fs.readFile as vi.Mock).mockResolvedValue(JSON.stringify(mockClients));
+        (fs.writeFile as vi.Mock).mockResolvedValue();
+        mockCreateClient.execute.mockResolvedValue(mockClients[0]);
+        const newClient = mockClients[0];
+        const result = await adapter.create(newClient);
+        expect(result).toEqual(newClient);
+        expect(fs.writeFile).toHaveBeenCalled();
+        expect(mockCreateClient.execute).toHaveBeenCalledWith(newClient);
     });
 
-    test("findById() should return a client by ID from JSON", async () => {
-        const mockClient: Client = ClientSchema;
-        const mockClients: Client[] = [mockClient];
-
-        // Mock de la lectura del archivo JSON
-        (fs.writeFile as jest.Mock).mockResolvedValue(mockClients);
-
-        const result = await clientJsonAdapter.findById(1);
-
-        expect(result).toEqual(mockClient);
+    it("should delete a client by id", async () => {
+        (fs.readFile as vi.Mock).mockResolvedValue(JSON.stringify(mockClients));
+        (fs.writeFile as vi.Mock).mockResolvedValue();
+        (mockUpdateClient.execute as vi.Mock).mockResolvedValue(mockClients[0]);
+        await adapter.delete(1);
+        expect(fs.writeFile).toHaveBeenCalled();
+        expect(mockDeleteClient.execute).toHaveBeenCalledWith(1);
     });
 
-    test("update() should update a client and write to JSON file", async () => {
-        const mockClient: Client = ClientSchema;
-        const mockClients: Client[] = [mockClient];
+    it("should find a client by id", async () => {
+        (fs.readFile as vi.Mock).mockResolvedValue(JSON.stringify(mockClients));
+        (mockUpdateClient.execute as vi.Mock).mockResolvedValue(mockClients[0]);
+        const client = await adapter.findById(1);
+        expect(client).toEqual(mockClients[0]);
+        expect(mockFindClientById.execute).toHaveBeenCalledWith(1);
+    });
 
-        // Mock de la lectura del archivo JSON
-        (fs.writeFile as jest.Mock).mockResolvedValue(mockClients);
-
-        // Mock de la escritura del archivo JSON
-        (fs.writeFile as jest.Mock).mockResolvedValue(undefined);
-
-        const updatedClient: Client = {
-            ...mockClient,
-            legal_name: "Updated Company",
-            validateClient: mockClient.validateClient,
-            validateRegistrationNumber: mockClient.validateRegistrationNumber,
-            validateLegalName: mockClient.validateLegalName,
-            validateTaxRate: mockClient.validateTaxRate,
-            validateDiscount: mockClient.validateDiscount,
-            validateEmails: mockClient.validateEmails,
-            validatePhones: mockClient.validatePhones,
-            validateBankAccounts: mockClient.validateBankAccounts
-        };
-        const result = await clientJsonAdapter.update(updatedClient);
-
+    it("should update a client", async () => {
+        (fs.readFile as vi.Mock).mockResolvedValue(JSON.stringify(mockClients));
+        (fs.writeFile as vi.Mock).mockResolvedValue();
+        (mockUpdateClient.execute as vi.Mock).mockResolvedValue(mockClients[0]);
+        const updatedClient = new Client(
+            mockClients[0].id,
+            mockClients[0].registration_number,
+            "Updated Company",
+            mockClients[0].type,
+            mockClients[0].website,
+            mockClients[0].country,
+            mockClients[0].tax_rate,
+            mockClients[0].discount,
+            mockClients[0].notes,
+            mockClients[0].user_id,
+            mockClients[0].address,
+            mockClients[0].emails,
+            mockClients[0].phones,
+            mockClients[0].bankAccounts
+        );
+        const result = await adapter.update(updatedClient);
         expect(result).toEqual(updatedClient);
-        expect(fs.writeFile).toHaveBeenCalledWith(jsonFilePath, JSON.stringify([updatedClient], null, 2));
-    });
-
-    test("delete() should remove a client and write to JSON file", async () => {
-        const mockClient: Client = ClientSchema;
-        const mockClients: Client[] = [mockClient];
-
-        // Mock de la lectura del archivo JSON
-        (fs.writeFile as jest.Mock).mockResolvedValue(JSON.stringify(mockClients));
-
-        // Mock de la escritura del archivo JSON
-        (fs.writeFile as jest.Mock).mockResolvedValue(undefined);
-
-        await clientJsonAdapter.delete(1);
-
-        expect(fs.writeFile).toHaveBeenCalledWith(jsonFilePath, JSON.stringify([], null, 2)); // Asegurándonos de que se haya eliminado
+        expect(fs.writeFile).toHaveBeenCalled();
+        expect(mockUpdateClient.execute).toHaveBeenCalledWith(updatedClient);
     });
 });
-
-// Datos simulados para los clientes
-const ClientSchema: Client = {
-    id: 1,
-    registration_number: "123456",
-    legal_name: "Test Company",
-    type: "JU",
-    website: "https://example.com",
-    country: "USA",
-    tax_rate: 15,
-    discount: 5,
-    notes: "Test client",
-    user_id: 1,
-    address: [
-        new Address(1, 'Solf Larea', 'Lara', 'New York', 'Stanford', '48330', true),
-        new Address(2, 'Solf Larea', 'Lara', 'New York', 'Stanford', '48330', false)
-    ],
-    emails: [
-        new Email(1, "other@gmail.com", "Work"),
-        new Email(2, "other2@gmail.com", "Personal")
-    ],
-    phones: [
-        new Phone(1, 'Gabriel', '6839182930', 'Personal')
-    ],
-    bankAccounts: [
-        new BankAccount(1, 'BBVA', '276473949947696', 'OT')
-    ],
-    validateClient: jest.fn(),
-    validateRegistrationNumber: jest.fn(),
-    validateLegalName: jest.fn(),
-    validateTaxRate: jest.fn(),
-    validateDiscount: jest.fn(),
-    validateEmails: jest.fn(),
-    validatePhones: jest.fn(),
-    validateBankAccounts: jest.fn()
-}

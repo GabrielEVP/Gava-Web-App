@@ -4,12 +4,12 @@ import fs from "fs/promises";
 import path from "path";
 
 export class ClientJsonAdapter {
-    private createClient: CreateClient
-    private deleteClient: DeleteClient
-    private findAllClient: FindAllClients
-    private findClientById: FindClientById
-    private updateClient: UpdateClient
-    private readonly jsonFilePath: string = path.join(__dirname, 'clients.json')
+    createClient: CreateClient
+    deleteClient: DeleteClient
+    findAllClient: FindAllClients
+    findClientById: FindClientById
+    updateClient: UpdateClient
+    readonly jsonFilePath: string = path.join(__dirname, 'clients.json')
 
     constructor(
         createClient: CreateClient,
@@ -25,7 +25,7 @@ export class ClientJsonAdapter {
         this.updateClient = updateClient
     }
 
-    private async readClientsFromFile(): Promise<Client[]> {
+    public async readClientsFromFile(): Promise<Client[]> {
         try {
             const data = await fs.readFile(this.jsonFilePath, 'utf-8')
             return JSON.parse(data)
@@ -34,7 +34,7 @@ export class ClientJsonAdapter {
         }
     }
 
-    private async writeClientsToFile(clients: Client[]): Promise<void> {
+    public async writeClientsToFile(clients: Client[]): Promise<void> {
         try {
             await fs.writeFile(this.jsonFilePath, JSON.stringify(clients, null, 2))
         } catch (error) {
@@ -42,7 +42,7 @@ export class ClientJsonAdapter {
         }
     }
 
-    async create(client: Client): Promise<Client> {
+    public async create(client: Client): Promise<Client> {
         try {
             const clients = await this.readClientsFromFile()
             clients.push(client)
@@ -53,7 +53,7 @@ export class ClientJsonAdapter {
         }
     }
 
-    async delete(id: number): Promise<void> {
+    public async delete(id: number): Promise<void> {
         try {
             const clients = await this.readClientsFromFile()
             const updatedClients = clients.filter(client => client.id !== id)
@@ -64,7 +64,7 @@ export class ClientJsonAdapter {
         }
     }
 
-    async findAll(): Promise<Client[]> {
+    public async findAll(): Promise<Client[]> {
         try {
             const clients = await this.readClientsFromFile()
             return clients
@@ -73,7 +73,7 @@ export class ClientJsonAdapter {
         }
     }
 
-    async findById(id: number): Promise<Client> {
+    public async findById(id: number): Promise<Client> {
         try {
             const clients = await this.readClientsFromFile()
             const client = clients.find(c => c.id === id)
@@ -84,7 +84,7 @@ export class ClientJsonAdapter {
         }
     }
 
-    async update(client: Client): Promise<Client> {
+    public async update(client: Client): Promise<Client> {
         try {
             const clients = await this.readClientsFromFile()
             const updatedClients = clients.map(c => c.id === client.id ? client : c)

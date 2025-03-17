@@ -22,7 +22,7 @@ import {
   PhonesList,
   EmailsList,
   BankAccountsList,
-} from '@pages/client/components/section'
+} from '@components/forms/section'
 import { FieldInput, FieldTextArea, FieldSelect } from '@components/fields'
 import {
   Building2,

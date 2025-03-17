@@ -1,4 +1,4 @@
-import Client from '@pages/client/presentation/Clients'
+import Client from '@pages/client/Clients'
 import BarChartProv from '@components/charts/bar'
 import { Card } from '@components/ui'
 

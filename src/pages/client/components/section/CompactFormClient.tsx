@@ -7,7 +7,7 @@ import { FieldInput, FieldSelect } from '@components/fields/index'
 import ClientSchema, {
   FormClientValues,
   DEFAULTCLIENTFORMVALUES,
-} from '@pages/client/presentation/schemas/Client.Schemas'
+} from '@pages/client/schemas/Client.Schemas'
 
 const CompactFormClient = () => {
   const {

@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Client from '@pages/client/presentation/Clients' // Asegúrate de que la ruta esté correcta
+import Client from '@pages/client/Clients' // Asegúrate de que la ruta esté correcta
 import ClientSchema, {
   FormClientValues,
   DEFAULTCLIENTFORMVALUES,
-} from '@pages/client/presentation/schemas/Client.Schemas'
+} from '@pages/client/schemas/Client.Schemas'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import {
   Card,

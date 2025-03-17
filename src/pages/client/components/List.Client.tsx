@@ -3,7 +3,7 @@ import { New, View, Edit, Trash } from '@components/buttons/index'
 import { SearchInput, FieldFilter } from '@components/fields/index'
 import { Card, TableCell, TableRow } from '@components/ui/index'
 import DashboardTable from '@components/dashboards/Table'
-import Client from '@pages/client/presentation/Clients'
+import Client from '@pages/client/Clients'
 
 const tableHeaders = ['Nombre Legal', 'R.I.F', 'Gremio']
 

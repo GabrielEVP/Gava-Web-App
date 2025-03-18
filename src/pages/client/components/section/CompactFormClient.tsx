@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MapPin, User } from 'lucide-react'
-import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
+import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/select/index'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import {
@@ -49,13 +49,6 @@ export const CompactFormClient = () => {
             />
           </div>
           <div className="grid gap-4 md:grid-cols-2">
-            <FieldInput
-              name="code_number"
-              control={control}
-              label="Codigo"
-              type="text"
-              error={errors.code_number}
-            />
             <FieldInput
               name="registration_number"
               control={control}

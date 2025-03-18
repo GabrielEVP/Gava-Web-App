@@ -3,14 +3,13 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { TYPE_BANK_ACCOUNT } from '@constants/index'
-import { DEFAULTBANKACCOUNTFORMVALUE } from '@schemas/index'
+import { TYPE_BANK_ACCOUNT } from '@constants/select/index'
+import { DEFAULTBANKACCOUNTFORMVALUE } from '@constants/index'
 import { FormSupplier } from '@pages/supplier'
-import { FormClient } from '@pages/client'
 
 interface BankAccountsListProps {
-  control: Control<FormSupplier | FormClient>
-  errors: FieldErrors<FormSupplier | FormClient>
+  control: Control<FormSupplier>
+  errors: FieldErrors<FormSupplier>
 }
 
 export const BankAccountsList: FC<BankAccountsListProps> = ({

@@ -3,13 +3,12 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput } from '@components/fields/index'
 import { Button, Checkbox, Label } from '@components/ui/'
 import { Trash2, Plus } from 'lucide-react'
-import { DEFAULTADDRESSFORMVALUE } from '@schemas/index'
+import { DEFAULTADDRESSFORMVALUE } from '@constants/index'
 import { FormSupplier } from '@pages/supplier'
-import { FormClient } from '@pages/client'
 
 interface AddressesListProps {
-  control: Control<FormSupplier | FormClient>
-  errors: FieldErrors<FormSupplier | FormClient>
+  control: Control<FormSupplier>
+  errors: FieldErrors<FormSupplier>
   isBilling: boolean
 }
 

@@ -3,14 +3,13 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { TYPE_PHONE } from '@constants/index'
-import { DEFAULTPHONEFORMVALUE } from '@schemas/index'
-import { FormSupplier } from '@pages/supplier'
+import { TYPE_PHONE } from '@constants/select/index'
+import { DEFAULTPHONEFORMVALUE } from '@constants/index'
 import { FormClient } from '@pages/client'
 
 interface PhonesListProps {
-  control: Control<FormSupplier | FormClient>
-  errors: FieldErrors<FormSupplier | FormClient>
+  control: Control<FormClient>
+  errors: FieldErrors<FormClient>
 }
 
 export const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {

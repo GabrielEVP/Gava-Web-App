@@ -3,13 +3,13 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { DEFAULTEMAILFORMVALUE } from '@schemas/index'
-import { FormSupplier } from '@pages/supplier'
+import { DEFAULTEMAILFORMVALUE } from '@constants/index'
+import { TYPE_EMAIL } from '@constants/select/TypeEmail'
 import { FormClient } from '@pages/client'
 
 interface EmailsListProps {
-  control: Control<FormSupplier | FormClient>
-  errors: FieldErrors<FormSupplier | FormClient>
+  control: Control<FormClient>
+  errors: FieldErrors<FormClient>
 }
 
 export const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {

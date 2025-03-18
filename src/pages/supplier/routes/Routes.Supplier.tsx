@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom'
-import { List, Details, Form } from '@pages/supplier/components'
+import { List, Details, FullFormSupplier } from '@pages/supplier/components'
 
 const SupplierRoutes: Array<RouteObject> = [
   {
@@ -8,11 +8,11 @@ const SupplierRoutes: Array<RouteObject> = [
   },
   {
     path: '/suppliers/new',
-    element: <Form />,
+    element: <FullFormSupplier />,
   },
   {
     path: '/suppliers/edit/:id',
-    element: <Form />,
+    element: <FullFormSupplier />,
   },
   {
     path: '/suppliers/:id',

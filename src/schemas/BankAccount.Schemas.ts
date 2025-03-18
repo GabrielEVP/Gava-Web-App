@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const BankAccountSchema = z.object({
-  BankAccounts: z.array(
+  bankAccounts: z.array(
     z.object({
       name: z.string().max(50, 'El nombre tiene como maximo 50 Caracteres'),
       accountNumber: z

@@ -1,23 +1,25 @@
 import { FC } from 'react'
-import {
-  useFieldArray,
-  FormProvider,
-  useFormContext,
-  useForm,
-} from 'react-hook-form'
+import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput } from '@components/fields/index'
-import { Label, Button, Checkbox } from '@components/ui/index'
+import { Button, Checkbox, Label } from '@components/ui/'
 import { Trash2, Plus } from 'lucide-react'
-import { FormAddress, DEFAULTADDRESSFORMVALUE } from '@schemas/index'
+import { DEFAULTADDRESSFORMVALUE } from '@schemas/index'
+import { FormSupplier } from '@pages/supplier'
+import { FormClient } from '@pages/client'
 
-export const AdressesList: FC = () => {
-  const methods = useForm()
+interface AddressesListProps {
+  control: Control<FormSupplier | FormClient>
+  errors: FieldErrors<FormSupplier | FormClient>
+  isBilling: boolean
+}
+
+export const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
   const {
-    control,
-    formState: { errors },
-  } = useFormContext<FormAddress>()
-
-  const { fields, append, remove, update } = useFieldArray({
+    fields: fields,
+    append: append,
+    remove: remove,
+    update: update,
+  } = useFieldArray({
     control,
     name: 'addresses',
   })
@@ -32,7 +34,7 @@ export const AdressesList: FC = () => {
   }
 
   return (
-    <FormProvider {...methods}>
+    <div>
       <Button
         type="button"
         variant="outline"
@@ -67,34 +69,33 @@ export const AdressesList: FC = () => {
               />
             </div>
             <div className="grid gap-4 md:grid-cols-3">
-              <FieldInput
-                name={`addresses.${index}.state`}
-                control={control}
-                label="Estado"
-                type="text"
-                error={errors.addresses?.[index]?.state}
-              />
-              <FieldInput
-                name={`addresses.${index}.city`}
-                control={control}
-                label="Ciudad"
-                type="text"
-                error={errors.addresses?.[index]?.city}
-              />
-              <FieldInput
-                name={`addresses.${index}.municipality`}
-                control={control}
-                label="Municipio"
-                type="text"
-                error={errors.addresses?.[index]?.municipality}
-              />
-              <FieldInput
-                name={`addresses.${index}.postalCode`}
-                control={control}
-                label="Código Postal"
-                type="text"
-                error={errors.addresses?.[index]?.postalCode}
-              />
+              <div className="space-y-2">
+                <FieldInput
+                  name={`addresses.${index}.state`}
+                  control={control}
+                  label="Estado"
+                  type="text"
+                  error={errors.addresses?.[index]?.state}
+                />
+              </div>
+              <div className="space-y-2">
+                <FieldInput
+                  name={`addresses.${index}.municipality`}
+                  control={control}
+                  label="Municipio"
+                  type="text"
+                  error={errors.addresses?.[index]?.municipality}
+                />
+              </div>
+              <div className="space-y-2">
+                <FieldInput
+                  name={`addresses.${index}.city`}
+                  control={control}
+                  label="Ciudad"
+                  type="text"
+                  error={errors.addresses?.[index]?.city}
+                />
+              </div>
             </div>
             <div className="flex items-center space-x-2">
               <Checkbox
@@ -111,6 +112,6 @@ export const AdressesList: FC = () => {
           </div>
         ))}
       </div>
-    </FormProvider>
+    </div>
   )
 }

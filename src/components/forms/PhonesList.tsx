@@ -1,31 +1,25 @@
 import { FC } from 'react'
-import {
-  useFieldArray,
-  FormProvider,
-  useFormContext,
-  useForm,
-} from 'react-hook-form'
+import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormPhone, DEFAULTPHONEFORMVALUE } from '@schemas/index'
 import { TYPE_PHONE } from '@constants/index'
+import { DEFAULTPHONEFORMVALUE } from '@schemas/index'
+import { FormSupplier } from '@pages/supplier'
+import { FormClient } from '@pages/client'
 
-export const PhonesList: FC = () => {
-  const methods = useForm()
+interface PhonesListProps {
+  control: Control<FormSupplier | FormClient>
+  errors: FieldErrors<FormSupplier | FormClient>
+}
 
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<FormPhone>()
-
+export const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'phones',
   })
-
   return (
-    <FormProvider {...methods}>
+    <>
       <Button
         type="button"
         variant="outline"
@@ -74,6 +68,6 @@ export const PhonesList: FC = () => {
           </div>
         </div>
       ))}
-    </FormProvider>
+    </>
   )
 }

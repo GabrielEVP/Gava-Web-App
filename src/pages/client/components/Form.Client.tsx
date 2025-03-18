@@ -6,7 +6,7 @@ import Client from '@pages/client/Clients'
 import {
   ClientSchema,
   FormClient,
-  DEFAULTCLIENTFORMVALUES,
+  DEFAULTCLIENTFORMVALUE,
 } from '@pages/client/schemas/index'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import {
@@ -39,7 +39,7 @@ export const FullFormClient = () => {
 
   const methods = useForm<FormClient>({
     resolver: zodResolver(ClientSchema),
-    defaultValues: DEFAULTCLIENTFORMVALUES as FormClient,
+    defaultValues: DEFAULTCLIENTFORMVALUE as FormClient,
     mode: 'onBlur',
   })
 
@@ -121,13 +121,6 @@ export const FullFormClient = () => {
                     </div>
                     <div className="grid gap-4 md:grid-cols-2">
                       <FieldInput
-                        name="code_number"
-                        control={control}
-                        label="Código"
-                        type="text"
-                        error={errors.code_number}
-                      />
-                      <FieldInput
                         name="registration_number"
                         control={control}
                         label="Número de Registro"
@@ -153,32 +146,16 @@ export const FullFormClient = () => {
                     </div>
                   </TabsContent>
                   <TabsContent className="space-y-4" value="address">
-                    <AdressesList />
+                    <AdressesList control={control} error={errors} />
                   </TabsContent>
                   <TabsContent className="space-y-4" value="contact">
-                    <PhonesList />
-                    <EmailsList />
+                    <PhonesList control={control} error={errors} />
+                    <EmailsList control={control} error={errors} />
                   </TabsContent>
                   <TabsContent className="space-y-4" value="bankAccount">
-                    <BankAccountsList />
+                    <BankAccountsList control={control} error={errors} />
                   </TabsContent>
                   <TabsContent className="space-y-4" value="credit">
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <FieldInput
-                        name="credit_days"
-                        control={control}
-                        label="Días de Crédito"
-                        type="number"
-                        error={errors.credit_days}
-                      />
-                      <FieldInput
-                        name="limit_credit"
-                        control={control}
-                        label="Límite de Crédito"
-                        type="number"
-                        error={errors.limit_credit}
-                      />
-                    </div>
                     <div className="grid gap-4 md:grid-cols-2">
                       <FieldInput
                         name="tax_rate"

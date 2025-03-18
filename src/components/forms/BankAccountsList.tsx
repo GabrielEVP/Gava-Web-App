@@ -1,31 +1,28 @@
 import { FC } from 'react'
-import {
-  useFieldArray,
-  FormProvider,
-  useFormContext,
-  useForm,
-} from 'react-hook-form'
+import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormBankAccount, DEFAULTBANKACCOUNTFORMVALUE } from '@schemas/index'
 import { TYPE_BANK_ACCOUNT } from '@constants/index'
+import { DEFAULTBANKACCOUNTFORMVALUE } from '@schemas/index'
+import { FormSupplier } from '@pages/supplier'
+import { FormClient } from '@pages/client'
 
-export const BankAccountsList: FC = () => {
-  const methods = useForm()
+interface BankAccountsListProps {
+  control: Control<FormSupplier | FormClient>
+  errors: FieldErrors<FormSupplier | FormClient>
+}
 
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<FormBankAccount>()
-
+export const BankAccountsList: FC<BankAccountsListProps> = ({
+  control,
+  errors,
+}) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'BankAccounts',
+    name: 'bankAccounts',
   })
-
   return (
-    <FormProvider {...methods}>
+    <>
       <Button
         type="button"
         variant="outline"
@@ -51,18 +48,18 @@ export const BankAccountsList: FC = () => {
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             <FieldInput
-              name={`BankAccounts.${index}.name`}
+              name={`bankAccounts.${index}.bank_name`}
               control={control}
               label="Nombre del Banco"
               type="text"
-              error={errors.BankAccounts?.[index]?.name}
+              error={errors.bankAccounts?.[index]?.name}
             />
             <FieldInput
-              name={`BankAccounts.${index}.accountNumber`}
+              name={`bankAccounts.${index}.account_number`}
               control={control}
               label="Numero de cuenta"
               type="text"
-              error={errors.BankAccounts?.[index]?.accountNumber}
+              error={errors.bankAccounts?.[index]?.accountNumber}
             />
             <FieldSelect
               name="country"
@@ -74,6 +71,6 @@ export const BankAccountsList: FC = () => {
           </div>
         </div>
       ))}
-    </FormProvider>
+    </>
   )
 }

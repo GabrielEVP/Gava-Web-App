@@ -7,7 +7,7 @@ import { FieldInput, FieldSelect } from '@components/fields/index'
 import {
   ClientSchema,
   FormClient,
-  DEFAULTCLIENTFORMVALUES,
+  DEFAULTCLIENTFORMVALUE,
 } from '@pages/client/schemas/index'
 
 export const CompactFormClient = () => {
@@ -17,7 +17,7 @@ export const CompactFormClient = () => {
     formState: { errors },
   } = useForm<FormClient>({
     resolver: zodResolver(ClientSchema),
-    defaultValues: DEFAULTCLIENTFORMVALUES as FormClient,
+    defaultValues: DEFAULTCLIENTFORMVALUE as FormClient,
     mode: 'onBlur',
   })
 

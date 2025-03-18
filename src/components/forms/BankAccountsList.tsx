@@ -3,25 +3,33 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@pages/client/schemas/Client.Schemas'
+import { FormBankAccount, DEFAULTBANKACCOUNTFORMVALUE } from '@schemas/index'
 import { TYPE_BANK_ACCOUNT } from '@constants/index'
 
 interface BankAccountsListProps {
-  control: Control<FormClientValues>
-  errors: FieldErrors<FormClientValues>
+  control: Control<FormBankAccount>
+  errors: FieldErrors<FormBankAccount>
 }
 
-const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
-  const { fields, append, remove } = useFieldArray({
+export const BankAccountsList: FC<BankAccountsListProps> = ({
+  control,
+  errors,
+}) => {
+  const {
+    fields: fields,
+    append: append,
+    remove: remove,
+  } = useFieldArray({
     control,
-    name: 'bank_accounts',
+    name: 'BankAccounts',
   })
+
   return (
-    <>
+    <div>
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ bank_name: '', account_number: '' })}
+        onClick={() => append(DEFAULTBANKACCOUNTFORMVALUE)}
         className="mt-2"
       >
         <Plus className="h-4 w-4 mr-2" /> Añadir Cuenta Bancaría
@@ -43,18 +51,18 @@ const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             <FieldInput
-              name={`bank_accounts.${index}.bank_name`}
+              name={`BankAccounts.${index}.name`}
               control={control}
               label="Nombre del Banco"
               type="text"
-              error={errors.bank_accounts?.[index]?.bank_name}
+              error={errors.BankAccounts?.[index]?.name}
             />
             <FieldInput
-              name={`bank_accounts.${index}.account_number`}
+              name={`BankAccounts.${index}.accountNumber`}
               control={control}
               label="Numero de cuenta"
               type="text"
-              error={errors.bank_accounts?.[index]?.account_number}
+              error={errors.BankAccounts?.[index]?.accountNumber}
             />
             <FieldSelect
               name="country"
@@ -66,8 +74,6 @@ const BankAccountsList: FC<BankAccountsListProps> = ({ control, errors }) => {
           </div>
         </div>
       ))}
-    </>
+    </div>
   )
 }
-
-export default BankAccountsList

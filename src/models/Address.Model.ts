@@ -7,4 +7,3 @@ export interface Address {
   postalCode: string
   isBilling: boolean
 }
-

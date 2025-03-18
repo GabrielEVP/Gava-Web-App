@@ -27,4 +27,6 @@ export {
     TableFooter,
 } from "./table"
 
+export { Checkbox } from './checkbox'
+
 

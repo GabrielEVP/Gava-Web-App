@@ -9,7 +9,7 @@ import ClientSchema, {
   DEFAULTCLIENTFORMVALUES,
 } from '@pages/client/schemas/Client.Schemas'
 
-const CompactFormClient = () => {
+export const CompactFormClient = () => {
   const {
     control,
     handleSubmit,
@@ -116,5 +116,3 @@ const CompactFormClient = () => {
     </form>
   )
 }
-
-export default CompactFormClient

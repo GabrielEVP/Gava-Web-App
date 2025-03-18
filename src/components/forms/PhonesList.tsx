@@ -3,16 +3,20 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@pages/client/schemas/Client.Schemas'
+import { FormPhone, DEFAULTPHONEFORMVALUE } from '@schemas/index'
 import { TYPE_PHONE } from '@constants/index'
 
 interface PhonesListProps {
-  control: Control<FormClientValues>
-  errors: FieldErrors<FormClientValues>
+  control: Control<FormPhone>
+  errors: FieldErrors<FormPhone>
 }
 
-const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
-  const { fields, append, remove } = useFieldArray({
+export const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
+  const {
+    fields: fields,
+    append: append,
+    remove: remove,
+  } = useFieldArray({
     control,
     name: 'phones',
   })
@@ -21,7 +25,7 @@ const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ name: '', phone: '' })}
+        onClick={() => append(DEFAULTPHONEFORMVALUE)}
         className="mt-2"
       >
         <Plus className="h-4 w-4 mr-2" /> Añadir Teléfono
@@ -69,5 +73,3 @@ const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
     </>
   )
 }
-
-export default PhonesList

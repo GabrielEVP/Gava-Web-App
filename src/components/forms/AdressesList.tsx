@@ -1,19 +1,16 @@
 import { FC } from 'react'
 import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput } from '@components/fields/index'
-import { Button } from '@components/ui/button'
+import { Label, Button, Checkbox } from '@components/ui/index'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@pages/client/schemas/Client.Schemas'
-import { Label } from '@components/ui/index'
-import { Checkbox } from '@components/ui/checkbox'
+import { FormAddress, DEFAULTADDRESSFORMVALUE } from '@schemas/index'
 
 interface AddressesListProps {
-  control: Control<FormClientValues>
-  errors: FieldErrors<FormClientValues>
-  isBilling: boolean
+  control: Control<FormAddress>
+  errors: FieldErrors<FormAddress>
 }
 
-const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
+export const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
   const {
     fields: fields,
     append: append,
@@ -38,15 +35,7 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
       <Button
         type="button"
         variant="outline"
-        onClick={() =>
-          append({
-            address: '',
-            state: '',
-            city: '',
-            municipality: '',
-            isBilling: false,
-          })
-        }
+        onClick={() => append(DEFAULTADDRESSFORMVALUE)}
         className="mt-2"
       >
         <Plus className="h-4 w-4 mr-2" /> Añadir Dirección
@@ -88,6 +77,15 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
               </div>
               <div className="space-y-2">
                 <FieldInput
+                  name={`addresses.${index}.city`}
+                  control={control}
+                  label="Ciudad"
+                  type="text"
+                  error={errors.addresses?.[index]?.city}
+                />
+              </div>
+              <div className="space-y-2">
+                <FieldInput
                   name={`addresses.${index}.municipality`}
                   control={control}
                   label="Municipio"
@@ -97,11 +95,11 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
               </div>
               <div className="space-y-2">
                 <FieldInput
-                  name={`addresses.${index}.city`}
+                  name={`addresses.${index}.postalCode`}
                   control={control}
-                  label="Ciudad"
+                  label="Codigo Postal"
                   type="text"
-                  error={errors.addresses?.[index]?.city}
+                  error={errors.addresses?.[index]?.postalCode}
                 />
               </div>
             </div>
@@ -123,5 +121,3 @@ const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
     </div>
   )
 }
-
-export default AdressesList

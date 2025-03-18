@@ -3,16 +3,20 @@ import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
-import { FormClientValues } from '@pages/client/schemas/Client.Schemas'
+import { FormEmail, DEFAULTEMAILFORMVALUE } from '@schemas/index'
 import { TYPE_EMAIL } from '@constants/index'
 
 interface EmailsListProps {
-  control: Control<FormClientValues>
-  errors: FieldErrors<FormClientValues>
+  control: Control<FormEmail>
+  errors: FieldErrors<FormEmail>
 }
 
-const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
-  const { fields, append, remove } = useFieldArray({
+export const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
+  const {
+    fields: fields,
+    append: append,
+    remove: remove,
+  } = useFieldArray({
     control,
     name: 'emails',
   })
@@ -22,8 +26,7 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
       <Button
         type="button"
         variant="outline"
-        onClick={() => append({ email: '' })}
-        className="mt-2"
+        onClick={() => append(DEFAULTEMAILFORMVALUE)}
       >
         <Plus className="h-4 w-4 mr-2" /> Añadir Emails
       </Button>
@@ -44,7 +47,7 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <FieldInput
-              name={`emails.${index}.name`}
+              name={`emails.${index}.email`}
               control={control}
               label="Nombre"
               type="text"
@@ -63,5 +66,3 @@ const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
     </>
   )
 }
-
-export default EmailsList

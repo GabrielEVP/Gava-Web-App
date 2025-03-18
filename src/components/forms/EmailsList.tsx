@@ -1,5 +1,10 @@
 import { FC } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import {
+  useFieldArray,
+  FormProvider,
+  useFormContext,
+  useForm,
+} from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
@@ -7,6 +12,8 @@ import { FormEmail, DEFAULTEMAILFORMVALUE } from '@schemas/index'
 import { TYPE_EMAIL } from '@constants/index'
 
 export const EmailsList: FC = () => {
+  const methods = useForm()
+
   const {
     control,
     formState: { errors },
@@ -18,7 +25,7 @@ export const EmailsList: FC = () => {
   })
 
   return (
-    <>
+    <FormProvider {...methods}>
       <Button
         type="button"
         variant="outline"
@@ -59,6 +66,6 @@ export const EmailsList: FC = () => {
           </div>
         </div>
       ))}
-    </>
+    </FormProvider>
   )
 }

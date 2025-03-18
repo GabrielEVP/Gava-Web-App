@@ -1,11 +1,17 @@
 import { FC } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import {
+  useFieldArray,
+  FormProvider,
+  useFormContext,
+  useForm,
+} from 'react-hook-form'
 import { FieldInput } from '@components/fields/index'
 import { Label, Button, Checkbox } from '@components/ui/index'
 import { Trash2, Plus } from 'lucide-react'
 import { FormAddress, DEFAULTADDRESSFORMVALUE } from '@schemas/index'
 
 export const AdressesList: FC = () => {
+  const methods = useForm()
   const {
     control,
     formState: { errors },
@@ -26,7 +32,7 @@ export const AdressesList: FC = () => {
   }
 
   return (
-    <div>
+    <FormProvider {...methods}>
       <Button
         type="button"
         variant="outline"
@@ -105,6 +111,6 @@ export const AdressesList: FC = () => {
           </div>
         ))}
       </div>
-    </div>
+    </FormProvider>
   )
 }

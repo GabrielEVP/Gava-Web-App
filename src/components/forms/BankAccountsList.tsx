@@ -1,5 +1,10 @@
 import { FC } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import {
+  useFieldArray,
+  FormProvider,
+  useFormContext,
+  useForm,
+} from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
@@ -7,6 +12,8 @@ import { FormBankAccount, DEFAULTBANKACCOUNTFORMVALUE } from '@schemas/index'
 import { TYPE_BANK_ACCOUNT } from '@constants/index'
 
 export const BankAccountsList: FC = () => {
+  const methods = useForm()
+
   const {
     control,
     formState: { errors },
@@ -18,7 +25,7 @@ export const BankAccountsList: FC = () => {
   })
 
   return (
-    <div>
+    <FormProvider {...methods}>
       <Button
         type="button"
         variant="outline"
@@ -67,6 +74,6 @@ export const BankAccountsList: FC = () => {
           </div>
         </div>
       ))}
-    </div>
+    </FormProvider>
   )
 }

@@ -1,25 +1,22 @@
 import { FC } from 'react'
-import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
 import { FormPhone, DEFAULTPHONEFORMVALUE } from '@schemas/index'
 import { TYPE_PHONE } from '@constants/index'
 
-interface PhonesListProps {
-  control: Control<FormPhone>
-  errors: FieldErrors<FormPhone>
-}
-
-export const PhonesList: FC<PhonesListProps> = ({ control, errors }) => {
+export const PhonesList: FC = () => {
   const {
-    fields: fields,
-    append: append,
-    remove: remove,
-  } = useFieldArray({
+    control,
+    formState: { errors },
+  } = useFormContext<FormPhone>()
+
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'phones',
   })
+
   return (
     <>
       <Button

@@ -1,22 +1,18 @@
 import { FC } from 'react'
-import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
 import { FormEmail, DEFAULTEMAILFORMVALUE } from '@schemas/index'
 import { TYPE_EMAIL } from '@constants/index'
 
-interface EmailsListProps {
-  control: Control<FormEmail>
-  errors: FieldErrors<FormEmail>
-}
-
-export const EmailsList: FC<EmailsListProps> = ({ control, errors }) => {
+export const EmailsList: FC = () => {
   const {
-    fields: fields,
-    append: append,
-    remove: remove,
-  } = useFieldArray({
+    control,
+    formState: { errors },
+  } = useFormContext<FormEmail>()
+
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'emails',
   })

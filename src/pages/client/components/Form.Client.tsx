@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Client from '@pages/client/Clients' // Asegúrate de que la ruta esté correcta
-import ClientSchema, {
-  FormClientValues,
+import Client from '@pages/client/Clients'
+import {
+  ClientSchema,
+  FormClient,
   DEFAULTCLIENTFORMVALUES,
-} from '@pages/client/schemas/Client.Schemas'
+} from '@pages/client/schemas/index'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import {
   Card,
@@ -22,7 +23,7 @@ import {
   PhonesList,
   EmailsList,
   BankAccountsList,
-} from '@components/forms/section'
+} from '@components/forms/'
 import { FieldInput, FieldTextArea, FieldSelect } from '@components/fields'
 import {
   Building2,
@@ -33,28 +34,25 @@ import {
   User,
 } from 'lucide-react'
 
-const FullFormClient = () => {
-  const { id } = useParams() // Captura el id de la URL
-  const [loading, setLoading] = useState(false)
+export const FullFormClient = () => {
+  const { id } = useParams()
 
   const {
     control,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<FormClientValues>({
+  } = useForm<FormClient>({
     resolver: zodResolver(ClientSchema),
-    defaultValues: DEFAULTCLIENTFORMVALUES as FormClientValues,
+    defaultValues: DEFAULTCLIENTFORMVALUES as FormClient,
     mode: 'onBlur',
   })
 
   useEffect(() => {}, [id, setValue])
 
-  const onSubmit: SubmitHandler<FormClientValues> = (data) => {
+  const onSubmit: SubmitHandler<FormClient> = (data) => {
     console.log(data)
   }
-
-  if (loading) return <p>Cargando...</p>
 
   return (
     <Client>
@@ -152,14 +150,14 @@ const FullFormClient = () => {
                   </div>
                 </TabsContent>
                 <TabsContent className="space-y-4" value="address">
-                  <AdressesList control={control} errors={errors} isBilling />
+                  <AdressesList />
                 </TabsContent>
                 <TabsContent className="space-y-4" value="contact">
-                  <PhonesList control={control} errors={errors} />
-                  <EmailsList control={control} errors={errors} />
+                  <PhonesList />
+                  <EmailsList />
                 </TabsContent>
                 <TabsContent className="space-y-4" value="bankAccount">
-                  <BankAccountsList control={control} errors={errors} />
+                  <BankAccountsList />
                 </TabsContent>
                 <TabsContent className="space-y-4" value="credit">
                   <div className="grid gap-4 md:grid-cols-2">
@@ -211,5 +209,3 @@ const FullFormClient = () => {
     </Client>
   )
 }
-
-export default FullFormClient

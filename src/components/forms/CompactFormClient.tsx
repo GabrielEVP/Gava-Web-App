@@ -4,23 +4,24 @@ import { MapPin, User } from 'lucide-react'
 import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/index'
 import { FieldInput, FieldSelect } from '@components/fields/index'
-import ClientSchema, {
-  FormClientValues,
+import {
+  ClientSchema,
+  FormClient,
   DEFAULTCLIENTFORMVALUES,
-} from '@pages/client/schemas/Client.Schemas'
+} from '@pages/client/schemas/index'
 
 export const CompactFormClient = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormClientValues>({
+  } = useForm<FormClient>({
     resolver: zodResolver(ClientSchema),
-    defaultValues: DEFAULTCLIENTFORMVALUES as FormClientValues,
+    defaultValues: DEFAULTCLIENTFORMVALUES as FormClient,
     mode: 'onBlur',
   })
 
-  const onSubmit: SubmitHandler<FormClientValues> = (data) => {
+  const onSubmit: SubmitHandler<FormClient> = (data) => {
     console.log(data)
   }
 
@@ -77,38 +78,6 @@ export const CompactFormClient = () => {
               placeholder="Seleccione un País"
               selectLabel="País"
               options={COUNTRIES}
-            />
-          </div>
-        </TabsContent>
-        <TabsContent className="space-y-4" value="address">
-          <FieldInput
-            name="address"
-            control={control}
-            label="Dirección"
-            type="text"
-            error={errors.addresses?.[0]?.address}
-          />
-          <div className="grid gap-4 md:grid-cols-3">
-            <FieldInput
-              name="state"
-              control={control}
-              label="Dirección"
-              type="text"
-              error={errors.addresses?.[0]?.state}
-            />
-            <FieldInput
-              name="city"
-              control={control}
-              label="Ciudad"
-              type="text"
-              error={errors.addresses?.[0]?.city}
-            />
-            <FieldInput
-              name="municipality"
-              control={control}
-              label="Municipio"
-              type="text"
-              error={errors.addresses?.[0]?.municipality}
             />
           </div>
         </TabsContent>

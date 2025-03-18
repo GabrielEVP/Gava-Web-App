@@ -1,22 +1,17 @@
 import { FC } from 'react'
-import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { FieldInput } from '@components/fields/index'
 import { Label, Button, Checkbox } from '@components/ui/index'
 import { Trash2, Plus } from 'lucide-react'
 import { FormAddress, DEFAULTADDRESSFORMVALUE } from '@schemas/index'
 
-interface AddressesListProps {
-  control: Control<FormAddress>
-  errors: FieldErrors<FormAddress>
-}
-
-export const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
+export const AdressesList: FC = () => {
   const {
-    fields: fields,
-    append: append,
-    remove: remove,
-    update: update,
-  } = useFieldArray({
+    control,
+    formState: { errors },
+  } = useFormContext<FormAddress>()
+
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'addresses',
   })
@@ -66,42 +61,34 @@ export const AdressesList: FC<AddressesListProps> = ({ control, errors }) => {
               />
             </div>
             <div className="grid gap-4 md:grid-cols-3">
-              <div className="space-y-2">
-                <FieldInput
-                  name={`addresses.${index}.state`}
-                  control={control}
-                  label="Estado"
-                  type="text"
-                  error={errors.addresses?.[index]?.state}
-                />
-              </div>
-              <div className="space-y-2">
-                <FieldInput
-                  name={`addresses.${index}.city`}
-                  control={control}
-                  label="Ciudad"
-                  type="text"
-                  error={errors.addresses?.[index]?.city}
-                />
-              </div>
-              <div className="space-y-2">
-                <FieldInput
-                  name={`addresses.${index}.municipality`}
-                  control={control}
-                  label="Municipio"
-                  type="text"
-                  error={errors.addresses?.[index]?.municipality}
-                />
-              </div>
-              <div className="space-y-2">
-                <FieldInput
-                  name={`addresses.${index}.postalCode`}
-                  control={control}
-                  label="Codigo Postal"
-                  type="text"
-                  error={errors.addresses?.[index]?.postalCode}
-                />
-              </div>
+              <FieldInput
+                name={`addresses.${index}.state`}
+                control={control}
+                label="Estado"
+                type="text"
+                error={errors.addresses?.[index]?.state}
+              />
+              <FieldInput
+                name={`addresses.${index}.city`}
+                control={control}
+                label="Ciudad"
+                type="text"
+                error={errors.addresses?.[index]?.city}
+              />
+              <FieldInput
+                name={`addresses.${index}.municipality`}
+                control={control}
+                label="Municipio"
+                type="text"
+                error={errors.addresses?.[index]?.municipality}
+              />
+              <FieldInput
+                name={`addresses.${index}.postalCode`}
+                control={control}
+                label="Código Postal"
+                type="text"
+                error={errors.addresses?.[index]?.postalCode}
+              />
             </div>
             <div className="flex items-center space-x-2">
               <Checkbox

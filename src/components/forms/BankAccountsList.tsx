@@ -1,25 +1,18 @@
 import { FC } from 'react'
-import { useFieldArray, Control, FieldErrors } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { FieldInput, FieldSelect } from '@components/fields/index'
 import { Button } from '@components/ui/button'
 import { Trash2, Plus } from 'lucide-react'
 import { FormBankAccount, DEFAULTBANKACCOUNTFORMVALUE } from '@schemas/index'
 import { TYPE_BANK_ACCOUNT } from '@constants/index'
 
-interface BankAccountsListProps {
-  control: Control<FormBankAccount>
-  errors: FieldErrors<FormBankAccount>
-}
-
-export const BankAccountsList: FC<BankAccountsListProps> = ({
-  control,
-  errors,
-}) => {
+export const BankAccountsList: FC = () => {
   const {
-    fields: fields,
-    append: append,
-    remove: remove,
-  } = useFieldArray({
+    control,
+    formState: { errors },
+  } = useFormContext<FormBankAccount>()
+
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'BankAccounts',
   })

@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom'
-import { List, Details, Form } from '@pages/client/components'
+import { List, Details, FullFormClient } from '@pages/client/components'
 
 const ClientRoutes: Array<RouteObject> = [
   {
@@ -8,11 +8,11 @@ const ClientRoutes: Array<RouteObject> = [
   },
   {
     path: '/clients/new',
-    element: <Form />,
+    element: <FullFormClient />,
   },
   {
     path: '/clients/edit/:id',
-    element: <Form />,
+    element: <FullFormClient />,
   },
   {
     path: '/clients/:id',

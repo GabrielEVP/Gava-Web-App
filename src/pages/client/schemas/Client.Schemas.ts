@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const ClientSchema = z.object({
+export const ClientSchema = z.object({
     code_number: z
         .string()
         .min(1, 'El número de código es obligatorio')
@@ -34,69 +34,18 @@ const ClientSchema = z.object({
         .max(100, 'El descuento no puede ser mayor que 100')
         .optional(),
     notes: z.string().optional(),
-    company_id: z.string().optional(), // Asumimos que el company_id es un string, como el ID de la compañía
-    phones: z
-        .array(
-            z.object({
-                name: z.string().max(20, 'El nombre del teléfono no puede tener más de 20 caracteres'),
-                phone: z.string().max(20, 'El número de teléfono no puede tener más de 20 caracteres'),
-            })
-        )
-        .optional(),
-    emails: z
-        .array(
-            z.object({
-                email: z.string().email('Debe ser un correo válido').max(255, 'El correo electrónico no puede tener más de 255 caracteres'),
-            })
-        )
-        .optional(),
-    bank_accounts: z
-        .array(
-            z.object({
-                bank_name: z.string().max(255, 'El nombre del banco no puede tener más de 255 caracteres'),
-                account_number: z.string().max(255, 'El número de cuenta no puede tener más de 255 caracteres'),
-            })
-        )
-        .optional(),
-    addresses: z
-        .array(
-            z.object({
-                address: z.string().max(255, 'La dirección no puede tener más de 255 caracteres'),
-                state: z.string().max(100, 'El estado no puede tener más de 100 caracteres'),
-                city: z.string().max(100, 'La ciudad no puede tener más de 100 caracteres'),
-                municipality: z.string().max(100, 'El municipio no puede tener más de 100 caracteres'),
-                isBilling: z.boolean().optional(),
-            })
-        )
-        .optional(),
 })
 
-type FormClientValues = z.infer<typeof ClientSchema>
+export type FormClient = z.infer<typeof ClientSchema>
 
-const DEFAULTCLIENTFORMVALUES = {
+export const DEFAULTCLIENTFORMVALUES = {
     legal_name: '',
     code_number: '',
     registration_number: '',
     type_client: '',
     country: '',
-    phones: [{ name: '', phone: '' }],
-    emails: [{ email: '' }],
-    bank_accounts: [{ bank_name: '', account_number: '' }],
-    addresses: [
-        {
-            address: '',
-            state: '',
-            city: '',
-            municipality: '',
-            isBilling: false,
-        },
-    ],
-    credit_days: 0,
-    limit_credit: 0,
     tax_rate: 0,
     discount: 0,
     notes: '',
 }
 
-export default ClientSchema
-export { DEFAULTCLIENTFORMVALUES, FormClientValues }

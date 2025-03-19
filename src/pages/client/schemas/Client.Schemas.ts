@@ -69,21 +69,14 @@ export const ClientSchema = z.object({
 export type FormClient = z.infer<typeof ClientSchema>
 
 export const DEFAULTCLIENTFORMVALUE = {
-    legal_name: '',
+    legal_name: '222',
     registration_number: '',
     type: 'OT' as 'NT' | 'JU' | 'GB' | 'OT',
     country: '',
-    tax_rate: 0,
+    tax_rate: 5,
     discount: 0,
     notes: '',
-    addresses: [{
-        address: '',
-        state: '',
-        city: '',
-        municipality: '',
-        postalCode: '',
-        isBilling: false,
-    }],
+    addresses: [],
     bankAccounts: [{
         name: '',
         accountNumber: '',

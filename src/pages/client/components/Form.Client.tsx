@@ -1,14 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Client from '@pages/client/Clients'
+import Client from '@pages/client/Clients' // Asegúrate de que la ruta esté correcta
 import {
   ClientSchema,
   FormClient,
   DEFAULTCLIENTFORMVALUE,
 } from '@pages/client/schemas/index'
-import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/select/index'
+import { COUNTRIES, TYPE_CONTACT_SELECT } from '@constants/index'
 import {
   Card,
   CardContent,
@@ -23,7 +23,7 @@ import {
   PhonesList,
   EmailsList,
   BankAccountsList,
-} from '@pages/client/components/section/index'
+} from '@pages/client/components/section'
 import { FieldInput, FieldTextArea, FieldSelect } from '@components/fields'
 import {
   Building2,
@@ -35,7 +35,8 @@ import {
 } from 'lucide-react'
 
 export const FullFormClient = () => {
-  const { id } = useParams()
+  const { id } = useParams() // Captura el id de la URL
+  const [loading, setLoading] = useState(false)
 
   const {
     control,
@@ -53,6 +54,8 @@ export const FullFormClient = () => {
   const onSubmit: SubmitHandler<FormClient> = (data) => {
     console.log(data)
   }
+
+  if (loading) return <p>Cargando...</p>
 
   return (
     <Client>
@@ -107,14 +110,14 @@ export const FullFormClient = () => {
                 </TabsList>
 
                 <TabsContent className="space-y-4" value="general">
-                  <FieldInput
-                    name="legal_name"
-                    control={control}
-                    label="Nombre Legal"
-                    type="text"
-                    error={errors.legal_name}
-                  />
                   <div className="grid gap-4 md:grid-cols-2">
+                    <FieldInput
+                      name="legal_name"
+                      control={control}
+                      label="Nombre Legal"
+                      type="text"
+                      error={errors.legal_name}
+                    />
                     <FieldInput
                       name="registration_number"
                       control={control}
@@ -125,7 +128,7 @@ export const FullFormClient = () => {
                   </div>
                   <div className="grid gap-4 md:grid-cols-2">
                     <FieldSelect
-                      name="type"
+                      name="type_client"
                       label="Tipo de Cliente"
                       placeholder="Seleccione un tipo de cliente"
                       selectLabel="Tipo de cliente"
@@ -141,7 +144,11 @@ export const FullFormClient = () => {
                   </div>
                 </TabsContent>
                 <TabsContent className="space-y-4" value="address">
-                  <AdressesList control={control} errors={errors} isBilling />
+                  <AdressesList
+                    control={control}
+                    errors={errors}
+                    setValue={setValue}
+                  />
                 </TabsContent>
                 <TabsContent className="space-y-4" value="contact">
                   <PhonesList control={control} errors={errors} />
